@@ -1,0 +1,33 @@
+package cn.pahot.sample.constant;
+
+/**
+ * 定义sample子系统全局参数
+ * <p>@Title: QueueEnums.java 
+ * <p>@Package cn.pahot.sample.enums 
+ * <p>@Description: TODO
+ * <p>@author huangjie hj87080234@gmail.com   
+ * <p>@date 2017年12月1日 下午1:34:58 
+ * <p>@version V1.0
+ * <p>Copyright © boc group.All Rights Reserved.
+ */
+public interface SampleConst {
+	
+	/**
+	 * sample子系统初始化异常变量
+	 */
+	int EXCEPTION_INIT_CODE=90000;
+	 /**
+	  * 消息队列名称
+	  */
+	 String SAMPLE_QUEUE_NAME = "sampleQueue";
+	 
+	 /**
+	  * 分布式事务消息发布编号,该编号通过运营后台进行配置,这里的值必须和后台配置的值一致
+	  */
+	 int SAMPLE_SUBID = 1001;
+	 
+	 /**
+	  * 定义一个该业务系统的分布式锁编号
+	  */
+	 int LOCK_NO_SAMPLE_1001 = 1001;
+}

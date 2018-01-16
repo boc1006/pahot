@@ -1,0 +1,30 @@
+package dubbo.test;
+
+import cn.pahot.sample.facade.SampleFacade;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+/**
+ * 测试
+ * <p>@Title pahot2.0
+ * <p>@Author boc
+ * <p>@Date 2017/12/24
+ * <p>@Email 87080234@gmail.com
+ * <p>@Department XXX部门
+ * <p>@Version V1.0
+ * <p>@Copyright © boc Inc. All rights reserved.
+ */
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:dubbo-sample-consumer.xml")
+public class Test {
+	@Autowired
+	private SampleFacade sampleFacade;
+
+	@org.junit.Test
+	public void queryByUser(){
+		sampleFacade.queryUserList("510100");
+	}
+}

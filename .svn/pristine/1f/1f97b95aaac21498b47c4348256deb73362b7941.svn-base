@@ -1,0 +1,74 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>cn.pahot</groupId>
+		<artifactId>pahot-common</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>pahot-common-core</artifactId>
+	<packaging>jar</packaging>
+	<name>pahot-common-core</name>
+	<description>pahot-common-core</description>
+	
+	<dependencies>
+		<!-- Application Dependency Begin -->
+		<dependency>
+			<groupId>cn.pahot</groupId>
+			<artifactId>pahot-common-utils</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.pahot</groupId>
+			<artifactId>pahot-logger-facade</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.pahot</groupId>
+			<artifactId>pahot-xa-facade</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<!-- Application Dependency End -->
+		
+		<!-- SpringBoot Dependency Begin -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+            		<groupId>ch.qos.logback</groupId>
+            		<artifactId>logback-classic</artifactId>
+            	</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- SpringBoot Dependency Begin -->
+		
+		<!-- Mybatis Dependency Begin -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<!-- Mybatis Dependency Begin -->
+	</dependencies>
+</project>

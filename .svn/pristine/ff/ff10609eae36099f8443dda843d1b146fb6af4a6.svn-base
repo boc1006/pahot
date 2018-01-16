@@ -1,0 +1,15 @@
+## Dubbo Zookeeper 配置地址
+dubbo.registry.address=zookeeper://192.168.3.220:2181?backup=192.168.3.220,192.168.3.220:2183&client=curator
+## dubbo 优化参数
+dubbo.provider.threads=300
+dubbo.provider.timeout=30000
+dubbo.provider.accepts=1000
+dubbo.provider.retries=0
+#fixed,cached
+dubbo.provider.threadpool=cached
+
+#基于Zookeeper分布式锁配置
+curator.lock.zk=192.168.3.220:2181,192.168.3.220:2182,192.168.3.220:2183
+curator.lock.session.timeout=5000
+curator.lock.baseSleepTimeMs=1000
+curator.lock.maxRetries=10

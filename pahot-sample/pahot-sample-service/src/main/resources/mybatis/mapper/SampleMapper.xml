@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pahot.sample.dao.SampleMapper" >
+
+    <!-- 添加用户 -->
+    <select id="addUser" parameterType="user">
+		insert into pt_sample_user (username,passwd,orgid,name,state,
+								  birthday,remark,sex,phone,aa01,aa02)
+					      values (#{username},#{passwd},#{orgid},#{name},#{state},
+					      		  #{birthday},#{remark},#{sex},#{phone},#{aa01},#{aa02})
+	</select>
+	
+	<!-- 修改用户基本信息 -->
+	<update id="updUser" parameterType="user">
+		update pt_sample_user
+		   set passwd = #{passwd},
+		       orgid  = #{orgid},
+		       name  = #{name},
+		       birthday  = #{birthday},
+		       remark  = #{remark},
+		       sex  = #{sex},
+		       phone  = #{phone},
+		       ab01  = #{ab01},
+		       ab02  = #{ab02}
+		 where id = #{id}
+	</update>
+	
+	<!-- 查询用户列表 -->
+	<select id="findByUserList" resultType="user">
+		select * from pt_sample_user
+	</select>
+	
+	<!-- 查询用户列表-分页 -->
+	<select id="findByUserListPage" resultType="user">
+		select * from pt_sample_user
+	</select>
+
+	<insert id="insertA" parameterType="tab">
+		insert into pt_sample_t1(name) values (#{name})
+	</insert>
+
+	<insert id="insertB" parameterType="tab">
+		insert into pt_sample_t2(name) values (#{name})
+	</insert>
+
+	<insert id="insertC" parameterType="tab">
+		insert into pt_sample_t3(name) values (#{name})
+	</insert>
+
+	<update id="updateA" parameterType="tab">
+		update pt_sample_t1
+		   set name = #{name}
+		 where id = #{id}
+	</update>
+
+	<update id="updateB" parameterType="tab">
+		update pt_sample_t2
+		   set name = #{name}
+		 where id = #{id}
+	</update>
+
+	<update id="updateC" parameterType="tab">
+		update pt_sample_t3
+		   set name = #{name}
+		 where id = #{id}
+	</update>
+
+	<delete id="deleteA" parameterType="tab">
+		delete from pt_sample_t1 where id = #{id}
+	</delete>
+
+	<delete id="deleteB" parameterType="tab">
+		delete from pt_sample_t2 where id = #{id}
+	</delete>
+
+	<delete id="deleteC" parameterType="tab">
+		delete from pt_sample_t3 where id = #{id}
+	</delete>
+
+	<select id="queryA" parameterType="tab" resultType="tab">
+		select id,name
+		  from pt_sample_t1
+		 where 1 = 1
+		   <if test="id != null and id != ''">
+			   and id = #{id}
+		   </if>
+		   <if test="name != null and name != ''">
+			   and name = #{name}
+		   </if>
+	</select>
+
+	<select id="queryB" parameterType="tab" resultType="tab">
+		select id,name
+		  from pt_sample_t2
+		 where 1 = 1
+		   <if test="id != null and id != ''">
+			   and id = #{id}
+		   </if>
+		   <if test="name != null and name != ''">
+			   and name = #{name}
+		   </if>
+	</select>
+
+	<select id="queryC" parameterType="tab" resultType="tab">
+		select id,name
+		  from pt_sample_t3
+		 where 1 = 1
+		   <if test="id != null and id != ''">
+			   and id = #{id}
+		   </if>
+		   <if test="name != null and name != ''">
+			   and name = #{name}
+		   </if>
+	</select>
+
+</mapper>

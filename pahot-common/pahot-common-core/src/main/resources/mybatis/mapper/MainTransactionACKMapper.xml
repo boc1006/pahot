@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.boc.common.core.dao.ack.MainTransactionACKDao">
+
+	<!-- 保存分布式事务-主事务域消息记录 -->
+    <insert id="saveMainTransactionACKDao" parameterType="java.lang.Long">
+        insert into pt_xa_ackid (id,cmttime)
+        values (#{messageId},now())
+    </insert>
+    
+    <!-- 查询消费者消息消费幂等性 -->
+    <select id="countByIdempotents" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select count(*) from pt_xa_idempotents where jtaid = #{messageid}
+    </select>
+    
+    <!-- 向业务幂等性表中插入MessageId -->
+    <insert id="saveByIdempotents" parameterType="java.lang.Long">
+        insert into pt_business.pt_xa_idempotents(jtaid, committime) values (#{messageid}, now())
+    </insert>
+</mapper>

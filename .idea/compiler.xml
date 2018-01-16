@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="pahot-business-facade" />
+        <module name="pahot-business-front" />
+        <module name="pahot-business-service" />
+        <module name="pahot-business-web" />
+        <module name="pahot-common-config" />
+        <module name="pahot-common-core" />
+        <module name="pahot-common-utils" />
+        <module name="pahot-common-web" />
+        <module name="pahot-goods-facade" />
+        <module name="pahot-goods-service" />
+        <module name="pahot-goods-web" />
+        <module name="pahot-logger-facade" />
+        <module name="pahot-logger-service" />
+        <module name="pahot-member-facade" />
+        <module name="pahot-member-service" />
+        <module name="pahot-member-web" />
+        <module name="pahot-message-facade" />
+        <module name="pahot-message-service" />
+        <module name="pahot-sample-facade" />
+        <module name="pahot-sample-facade-consumer" />
+        <module name="pahot-sample-service" />
+        <module name="pahot-sample-service-consumer" />
+        <module name="pahot-sample-web" />
+        <module name="pahot-upms-facade" />
+        <module name="pahot-upms-facade-auth" />
+        <module name="pahot-upms-service" />
+        <module name="pahot-upms-service-auth" />
+        <module name="pahot-upms-web" />
+        <module name="pahot-xa-facade" />
+        <module name="pahot-xa-scheduler" />
+        <module name="pahot-xa-service" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="1.8">
+      <module name="gateway_main" target="1.8" />
+      <module name="gateway_test" target="1.8" />
+      <module name="pahot-business" target="1.5" />
+      <module name="pahot-business-facade" target="1.8" />
+      <module name="pahot-business-front" target="1.8" />
+      <module name="pahot-business-service" target="1.8" />
+      <module name="pahot-business-web" target="1.8" />
+      <module name="pahot-common" target="1.5" />
+      <module name="pahot-common-config" target="1.8" />
+      <module name="pahot-common-core" target="1.8" />
+      <module name="pahot-common-utils" target="1.8" />
+      <module name="pahot-common-web" target="1.8" />
+      <module name="pahot-goods" target="1.5" />
+      <module name="pahot-goods-facade" target="1.8" />
+      <module name="pahot-goods-service" target="1.8" />
+      <module name="pahot-goods-web" target="1.8" />
+      <module name="pahot-logger" target="1.5" />
+      <module name="pahot-logger-facade" target="1.8" />
+      <module name="pahot-logger-service" target="1.8" />
+      <module name="pahot-member" target="1.5" />
+      <module name="pahot-member-facade" target="1.8" />
+      <module name="pahot-member-service" target="1.8" />
+      <module name="pahot-member-web" target="1.8" />
+      <module name="pahot-message" target="1.5" />
+      <module name="pahot-message-facade" target="1.8" />
+      <module name="pahot-message-service" target="1.8" />
+      <module name="pahot-sample" target="1.5" />
+      <module name="pahot-sample-facade" target="1.8" />
+      <module name="pahot-sample-facade-consumer" target="1.8" />
+      <module name="pahot-sample-service" target="1.8" />
+      <module name="pahot-sample-service-consumer" target="1.8" />
+      <module name="pahot-sample-web" target="1.8" />
+      <module name="pahot-upms" target="1.5" />
+      <module name="pahot-upms-facade" target="1.8" />
+      <module name="pahot-upms-facade-auth" target="1.8" />
+      <module name="pahot-upms-service" target="1.8" />
+      <module name="pahot-upms-service-auth" target="1.8" />
+      <module name="pahot-upms-web" target="1.8" />
+      <module name="pahot-xa" target="1.5" />
+      <module name="pahot-xa-facade" target="1.8" />
+      <module name="pahot-xa-scheduler" target="1.8" />
+      <module name="pahot-xa-service" target="1.8" />
+      <module name="pahuolianmeng_main" target="1.8" />
+      <module name="pahuolianmeng_test" target="1.8" />
+      <module name="parent" target="1.5" />
+      <module name="protocol_main" target="1.8" />
+      <module name="protocol_test" target="1.8" />
+      <module name="service_main" target="1.8" />
+      <module name="service_test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gateway/gateway.iml" filepath="$PROJECT_DIR$/.idea/modules/gateway/gateway.iml" group="gateway" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gateway/gateway_main.iml" filepath="$PROJECT_DIR$/.idea/modules/gateway/gateway_main.iml" group="gateway" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gateway/gateway_test.iml" filepath="$PROJECT_DIR$/.idea/modules/gateway/gateway_test.iml" group="gateway" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-business/pahot-business.iml" filepath="$PROJECT_DIR$/pahot-business/pahot-business.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-business/pahot-business-facade/pahot-business-facade.iml" filepath="$PROJECT_DIR$/pahot-business/pahot-business-facade/pahot-business-facade.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-business/pahot-business-front/pahot-business-front.iml" filepath="$PROJECT_DIR$/pahot-business/pahot-business-front/pahot-business-front.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-business/pahot-business-service/pahot-business-service.iml" filepath="$PROJECT_DIR$/pahot-business/pahot-business-service/pahot-business-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-business/pahot-business-web/pahot-business-web.iml" filepath="$PROJECT_DIR$/pahot-business/pahot-business-web/pahot-business-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-common/pahot-common.iml" filepath="$PROJECT_DIR$/pahot-common/pahot-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-common/pahot-common-config/pahot-common-config.iml" filepath="$PROJECT_DIR$/pahot-common/pahot-common-config/pahot-common-config.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-common/pahot-common-core/pahot-common-core.iml" filepath="$PROJECT_DIR$/pahot-common/pahot-common-core/pahot-common-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-common/pahot-common-utils/pahot-common-utils.iml" filepath="$PROJECT_DIR$/pahot-common/pahot-common-utils/pahot-common-utils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-common/pahot-common-web/pahot-common-web.iml" filepath="$PROJECT_DIR$/pahot-common/pahot-common-web/pahot-common-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-goods/pahot-goods.iml" filepath="$PROJECT_DIR$/pahot-goods/pahot-goods.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-goods/pahot-goods-facade/pahot-goods-facade.iml" filepath="$PROJECT_DIR$/pahot-goods/pahot-goods-facade/pahot-goods-facade.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-goods/pahot-goods-service/pahot-goods-service.iml" filepath="$PROJECT_DIR$/pahot-goods/pahot-goods-service/pahot-goods-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-goods/pahot-goods-web/pahot-goods-web.iml" filepath="$PROJECT_DIR$/pahot-goods/pahot-goods-web/pahot-goods-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-logger/pahot-logger.iml" filepath="$PROJECT_DIR$/pahot-logger/pahot-logger.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-logger/pahot-logger-facade/pahot-logger-facade.iml" filepath="$PROJECT_DIR$/pahot-logger/pahot-logger-facade/pahot-logger-facade.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-logger/pahot-logger-service/pahot-logger-service.iml" filepath="$PROJECT_DIR$/pahot-logger/pahot-logger-service/pahot-logger-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-member/pahot-member.iml" filepath="$PROJECT_DIR$/pahot-member/pahot-member.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-member/pahot-member-facade/pahot-member-facade.iml" filepath="$PROJECT_DIR$/pahot-member/pahot-member-facade/pahot-member-facade.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-member/pahot-member-service/pahot-member-service.iml" filepath="$PROJECT_DIR$/pahot-member/pahot-member-service/pahot-member-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-member/pahot-member-web/pahot-member-web.iml" filepath="$PROJECT_DIR$/pahot-member/pahot-member-web/pahot-member-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-message/pahot-message.iml" filepath="$PROJECT_DIR$/pahot-message/pahot-message.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-message/pahot-message-facade/pahot-message-facade.iml" filepath="$PROJECT_DIR$/pahot-message/pahot-message-facade/pahot-message-facade.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-message/pahot-message-service/pahot-message-service.iml" filepath="$PROJECT_DIR$/pahot-message/pahot-message-service/pahot-message-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-sample/pahot-sample.iml" filepath="$PROJECT_DIR$/pahot-sample/pahot-sample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-sample/pahot-sample-facade/pahot-sample-facade.iml" filepath="$PROJECT_DIR$/pahot-sample/pahot-sample-facade/pahot-sample-facade.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-sample/pahot-sample-facade-consumer/pahot-sample-facade-consumer.iml" filepath="$PROJECT_DIR$/pahot-sample/pahot-sample-facade-consumer/pahot-sample-facade-consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-sample/pahot-sample-service/pahot-sample-service.iml" filepath="$PROJECT_DIR$/pahot-sample/pahot-sample-service/pahot-sample-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-sample/pahot-sample-service-consumer/pahot-sample-service-consumer.iml" filepath="$PROJECT_DIR$/pahot-sample/pahot-sample-service-consumer/pahot-sample-service-consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-sample/pahot-sample-web/pahot-sample-web.iml" filepath="$PROJECT_DIR$/pahot-sample/pahot-sample-web/pahot-sample-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-upms/pahot-upms.iml" filepath="$PROJECT_DIR$/pahot-upms/pahot-upms.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-upms/pahot-upms-facade/pahot-upms-facade.iml" filepath="$PROJECT_DIR$/pahot-upms/pahot-upms-facade/pahot-upms-facade.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-upms/pahot-upms-facade-auth/pahot-upms-facade-auth.iml" filepath="$PROJECT_DIR$/pahot-upms/pahot-upms-facade-auth/pahot-upms-facade-auth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-upms/pahot-upms-service/pahot-upms-service.iml" filepath="$PROJECT_DIR$/pahot-upms/pahot-upms-service/pahot-upms-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-upms/pahot-upms-service-auth/pahot-upms-service-auth.iml" filepath="$PROJECT_DIR$/pahot-upms/pahot-upms-service-auth/pahot-upms-service-auth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-upms/pahot-upms-web/pahot-upms-web.iml" filepath="$PROJECT_DIR$/pahot-upms/pahot-upms-web/pahot-upms-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-xa/pahot-xa.iml" filepath="$PROJECT_DIR$/pahot-xa/pahot-xa.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-xa/pahot-xa-facade/pahot-xa-facade.iml" filepath="$PROJECT_DIR$/pahot-xa/pahot-xa-facade/pahot-xa-facade.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-xa/pahot-xa-scheduler/pahot-xa-scheduler.iml" filepath="$PROJECT_DIR$/pahot-xa/pahot-xa-scheduler/pahot-xa-scheduler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pahot-xa/pahot-xa-service/pahot-xa-service.iml" filepath="$PROJECT_DIR$/pahot-xa/pahot-xa-service/pahot-xa-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pahuolianmeng.iml" filepath="$PROJECT_DIR$/.idea/modules/pahuolianmeng.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pahuolianmeng_main.iml" filepath="$PROJECT_DIR$/.idea/modules/pahuolianmeng_main.iml" group="pahuolianmeng" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pahuolianmeng_test.iml" filepath="$PROJECT_DIR$/.idea/modules/pahuolianmeng_test.iml" group="pahuolianmeng" />
+      <module fileurl="file://$PROJECT_DIR$/parent.iml" filepath="$PROJECT_DIR$/parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/protocol/protocol.iml" filepath="$PROJECT_DIR$/.idea/modules/protocol/protocol.iml" group="protocol" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/protocol/protocol_main.iml" filepath="$PROJECT_DIR$/.idea/modules/protocol/protocol_main.iml" group="protocol" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/protocol/protocol_test.iml" filepath="$PROJECT_DIR$/.idea/modules/protocol/protocol_test.iml" group="protocol" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/service/service.iml" filepath="$PROJECT_DIR$/.idea/modules/service/service.iml" group="service" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/service/service_main.iml" filepath="$PROJECT_DIR$/.idea/modules/service/service_main.iml" group="service" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/service/service_test.iml" filepath="$PROJECT_DIR$/.idea/modules/service/service_test.iml" group="service" />
+    </modules>
+  </component>
+</project>

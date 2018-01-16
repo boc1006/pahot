@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pahot.business.dao.ShopOpenSubLogDao">
+
+    <!--店铺申请记录-->
+    <insert id="addShopSubLogInfo" parameterType="shopOpenSubLogEntity">
+
+        INSERT  INTO pt_business_merchant_shop_ask
+        (id,
+        merchant_id,
+        name,
+        address,
+        shop_lng,
+        shop_lat,
+        shop_desc,
+        biz_scope,
+        remark,
+        aa01,
+        aa02,
+        aa03,
+        aa04,
+        state,
+        remark2)
+        VALUES
+        (#{id},
+        #{merchant_id},
+        #{name},
+        #{address},
+        #{shop_lng},
+        #{shop_lat},
+        #{shop_desc},
+        #{biz_scope},
+        #{remark},
+        #{aa01},
+        #{aa02},
+        #{aa03},
+        #{aa04},
+        #{state},
+        #{remark2})
+
+    </insert>
+
+    <!--获取一条店铺申请记录-->
+    <select id="getShopSubLogInfoItem" parameterType="java.lang.Long" resultType="shopOpenSubLogEntity">
+        SELECT
+        (id,
+        merchant_id,
+        name,
+        address,
+        shop_lng,
+        shop_lat,
+        shop_desc,
+        biz_scope,
+        remark,
+        aa01,
+        aa02,
+        aa03,
+        aa04,
+        state,
+        remark2 )
+        FROM
+        pt_business_merchant_shop_ask
+        WHERE
+        id = #{id}
+    </select>
+
+    <!--更新店铺申请记录-->
+    <update id="updateShopSubLogInfoState" parameterType="shopOpenSolveLogEntity">
+
+        UPDATE pt_business_merchant_shop_ask
+
+        <trim prefix="set" suffixOverrides=",">
+            <if test="aa01 != null and aa01 != '' ">aa03 = #{aa01},</if>
+            <if test="aa02 != null and aa02 != '' ">aa04 = #{aa02},</if>
+            <if test="state != null and state != '' ">state = #{state},</if>
+            <if test="remark != null and remark != '' ">remark2 = #{remark},</if>
+        </trim>
+        WHEN id = #{shop_ask_id}
+    </update>
+
+    <!--获取店铺申请记录的列表-->
+    <select id="getShopSubLogInfoStateList" resultType="shopOpenSolveLogEntity">
+        SELECT
+        (id,
+        merchant_id,
+        name,
+        address,
+        shop_lng,
+        shop_lat,
+        shop_desc,
+        biz_scope,
+        remark,
+        aa01,
+        aa02,
+        aa03,
+        aa04,
+        state,
+        remark2)
+        FROM
+        pt_business_merchant_shop_ask
+
+    </select>
+
+</mapper>

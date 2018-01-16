@@ -1,0 +1,263 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>cn.pahot</groupId>
+	<artifactId>parent</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>pahot-parent</name>
+	<description>pahot-parent</description>
+
+	<distributionManagement>
+		<repository>
+			<id>nexus-releases</id>
+			<name>Nexus Release Repository</name>
+			<url>http://192.168.3.222:8081/nexus/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>nexus-snapshots</id>
+			<name>Nexus Snapshot Repository</name>
+			<url>http://192.168.3.222:8081/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<properties>
+		<javassist_version>3.20.0-GA</javassist_version>
+		<fastjson_version>1.2.31</fastjson_version>
+		<dubbo_version>2.5.7-20171222</dubbo_version>
+		<zookeeper_version>3.4.9</zookeeper_version>
+		<zkclient_version>0.2</zkclient_version>
+		<curator_version>2.12.0</curator_version>
+		<!-- Build args -->
+		<argline>
+			-server -Xms64m -Xmx256m -XX:PermSize=64m
+			-XX:MaxPermSize=128m
+			-Dfile.encoding=UTF-8
+			-Djava.net.preferIPv4Stack=true
+		</argline>
+		<skip_maven_deploy>false</skip_maven_deploy>
+		<updateReleaseInfo>true</updateReleaseInfo>
+		<project.build.sourceEncoding>${file_encoding}</project.build.sourceEncoding>
+
+		<profile.name>pahot</profile.name>
+
+		<!-- for maven compiler plugin -->
+		<java_source_version>1.8</java_source_version>
+		<java_target_version>1.8</java_target_version>
+		<file_encoding>UTF-8</file_encoding>
+
+	</properties>
+	<dependencyManagement>
+		<dependencies>
+			<!-- SpringBoot Dependency Begin -->
+			<dependency>
+	            <groupId>org.springframework.boot</groupId>
+	            <artifactId>spring-boot-dependencies</artifactId>
+	            <version>1.5.8.RELEASE</version>
+	            <type>pom</type>
+	            <scope>import</scope>
+	            <exclusions>
+	            	<exclusion>
+	            		<groupId>ch.qos.logback</groupId>
+	            		<artifactId>logback-classic</artifactId>
+	            	</exclusion>
+	            </exclusions>
+	        </dependency>
+			<!-- SpringBoot Dependency End -->
+	        
+	        <!-- Mybatis Dependency Begin -->
+	        <dependency>
+			    <groupId>org.mybatis.spring.boot</groupId>
+			    <artifactId>mybatis-spring-boot-starter</artifactId>
+			    <version>1.3.0</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>com.github.pagehelper</groupId>
+			    <artifactId>pagehelper</artifactId>
+			    <version>5.1.2</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid</artifactId>
+				<version>1.1.5</version>
+			</dependency>
+
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>5.1.32</version>
+			</dependency>
+	        <!-- Mybatis Dependency Begin -->
+
+			<!-- Redisson Dependency Begin -->
+			<dependency>
+				<groupId>org.redisson</groupId>
+				<artifactId>redisson</artifactId>
+				<version>3.5.6</version>
+			</dependency>
+			<!-- Redisson Dependency End -->
+
+			<!-- Common Dependency Begin -->
+			<dependency>
+                <groupId>com.dgg.web</groupId>
+                <artifactId>common</artifactId>
+                <version>1.0.2</version>
+            </dependency>
+            
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>fastjson</artifactId>
+				<version>${fastjson_version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.belerweb</groupId>
+				<artifactId>pinyin4j</artifactId>
+				<version>2.5.0</version>
+			</dependency>
+			<!-- Common Dependency End -->
+            
+            <!-- Dubbo Dependency Begin -->
+			<dependency>
+				<groupId>org.javassist</groupId>
+				<artifactId>javassist</artifactId>
+				<version>${javassist_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>dubbo</artifactId>
+				<version>${dubbo_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.zookeeper</groupId>
+				<artifactId>zookeeper</artifactId>
+				<version>${zookeeper_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.101tec</groupId>
+				<artifactId>zkclient</artifactId>
+				<version>${zkclient_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.curator</groupId>
+				<artifactId>curator-framework</artifactId>
+				<version>${curator_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.curator</groupId>
+				<artifactId>curator-recipes</artifactId>
+				<version>${curator_version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.curator</groupId>
+				<artifactId>curator-client</artifactId>
+				<version>${curator_version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.curator</groupId>
+				<artifactId>curator-x-discovery</artifactId>
+				<version>${curator_version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.curator</groupId>
+				<artifactId>curator-examples</artifactId>
+				<version>${curator_version}</version>
+			</dependency>
+            <!-- Dubbo Dependency Begin -->
+            
+            <!-- Servlet Dependency Begin -->
+            <dependency>
+                <groupId>jstl</groupId>
+                <artifactId>jstl</artifactId>
+                <version>1.2</version>
+            </dependency>
+            <!-- Servlet Dependency End -->
+            
+            <!-- Guava Dependency Begin -->
+            <dependency>
+			    <groupId>com.google.guava</groupId>
+			    <artifactId>guava</artifactId>
+			    <version>23.0</version>
+			</dependency>
+            <!-- Guava Dependency End -->
+		</dependencies>
+	</dependencyManagement>
+	<build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.7</version>
+                    <configuration>
+                        <uniqueVersion>false</uniqueVersion>
+                        <skip>false</skip>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <configuration>
+                        <testFailureIgnore>true</testFailureIgnore>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-eclipse-plugin</artifactId>
+                    <version>2.8</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.3.2</version>
+                    <configuration>
+                        <failOnError>true</failOnError>
+                        <verbose>true</verbose>
+                        <fork>true</fork>
+                        <compilerArgument>-nowarn</compilerArgument>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.1.2</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.10.4</version>
+                    <configuration>
+                        <reportOutputDirectory>../myoutput</reportOutputDirectory>
+                        <destDir>myapidocs</destDir>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+	<modules>
+		<module>pahot-common</module>
+		<module>pahot-upms</module>
+		<module>pahot-xa</module>
+		<module>pahot-logger</module>
+		<module>pahot-sample</module>
+		<module>pahot-message</module>
+		<module>pahot-goods</module>
+		<module>pahot-member</module>
+		<module>pahot-business</module>
+	</modules>
+</project>

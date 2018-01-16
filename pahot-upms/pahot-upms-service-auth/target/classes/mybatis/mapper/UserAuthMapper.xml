@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pahot.upms.dao.auth.UserAuthMapper" >
+
+	<!-- 根据用户名查询用户信息 -->
+    <select id="queryUserByUsername" parameterType="java.lang.String" resultType="user">
+		select u.id,u.username,u.passwd,u.orgid,u.name,u.state,u.birthday,
+			   u.remark,u.sex,u.phone,u.aa01,u.aa02,u.ab01,u.ab02,o.state as orgstate
+		  from pt_upms_user u,pt_upms_org o
+		 where u.orgid = o.id
+		   and username= #{username}
+	</select>
+	
+	<!-- 根据用户编号查询用户可用的角色信息 -->
+    <select id="queryUserRoleByUID" parameterType="java.lang.Integer" resultType="role">
+		select d.id,d.sid,d.name,d.validity,d.state,d.sort,d.arights,d.hrights,
+			   d.aa01,d.aa02,d.ab01,d.ab02
+		  from pt_upms_user a,pt_upms_user_role b,pt_upms_role d
+		 where a.id = b.uid
+		   and b.rid = d.id
+		   and d.state = '01'
+		   and (d.validity = 0 or d.validity >= now())
+		   and a.id = #{uid}
+	</select>
+	
+	<!-- 查询系统菜单树 -->
+	<resultMap id="systemMenu" type="cn.pahot.upms.auth.entity.SystemConfEntity" >
+		<id column="sysid" property="id"/>
+		<result column="sname" property="name"/>
+		<result column="slogo" property="logo"/>
+		<result column="surl" property="url"/>
+		<collection property="list" resultMap="menuResult" ofType="cn.pahot.upms.auth.entity.MenuEntity"/>
+	</resultMap>
+	
+	<resultMap type="cn.pahot.upms.auth.entity.MenuEntity" id="menuResult">
+        <id column="ID" property="id"/>
+		<result column="NAME" property="name"/>
+		<result column="PARENTID" property="parentid"/>
+		<result column="MTYPE" property="mtype"/>
+		<result column="BTYPE" property="btype"/>
+		<result column="ICON" property="icon"/>
+		<result column="JUMP" property="jump"/>
+		<result column="URI" property="uri"/>
+		<result column="STATE" property="state"/>
+		<result column="SORT" property="sort"/>
+		<result column="LEVEL" property="level"/>
+		<result column="HASHKEY" property="hashkey"/>
+    </resultMap>
+
+	<!-- 根据系统编号查询菜单列表 -->
+	<select id="querySysMenu" parameterType="dto" resultMap="systemMenu">
+		select m.id, m.sid, m.parentid, m.name, m.mtype, m.btype, m.icon, m.jump, m.uri, m.state,
+		       m.sort, m.hashkey,s.id as sysid,s.name as sname,s.logo as slogo ,s.url as surl,m.level
+		  from pt_upms_sysconf s left join pt_upms_menu m on m.sid = s.id
+			<if test="state != null and state != '' ">
+				and m.state = #{state}
+			</if>
+		  where s.state='01'
+		   <if test="sid != null and sid != '' ">
+   		   		and m.sid = #{sid}
+   		   </if>
+      order by s.sort asc,m.sort asc
+	</select>
+	
+	<select id="querySysMenuTree" parameterType="dto" resultType="menu">
+		select id,sid,parentid,name,mtype,btype,icon,jump,uri,state,sort,hashkey
+		from pt_upms_menu
+		where 1 = 1
+		<if test="state != null and state != '' ">
+			and state = #{state}
+		</if>
+		<if test="sid != null and sid != '' ">
+			and sid = #{sid}
+		</if>
+		order by sort
+	</select>
+
+	<!-- 查询系统菜单操作权限 -->
+	<select id="querySysRightsMenu" parameterType="dto" resultType="menuRights">
+		select id,mid,sid,code,name,type,sort,state,hashkey
+		  from pt_upms_menu_hrights
+		 where 1 = 1
+		   <if test="state != null and state != '' ">
+   		   		and state = #{state}
+   		   </if>
+		   <if test="sid != null and sid != '' ">
+   		   		and sid = #{sid}
+   		   </if>
+		   <if test="mid != null and mid != '' ">
+   		   		and mid = #{mid}
+   		   </if>
+      order by sort
+	</select>
+	
+</mapper>

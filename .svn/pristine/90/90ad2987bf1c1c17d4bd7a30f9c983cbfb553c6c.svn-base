@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pahot.business.dao.ShopOpenSolveLogDao">
+
+    <!--店铺审核记录-->
+    <insert id="addShopSolveLogInfo" parameterType="shopOpenSubLogEntity">
+
+        INSERT  INTO pt_business_shop_audit_logs
+        (id,
+        shop_ask_id,
+        aa01,
+        aa02,
+        state,
+        remark )
+        VALUES
+        (#{insertid},
+        #{id},
+        #{aa03},
+        #{aa04},
+        #{state},
+        #{remark2})
+    </insert>
+
+    <!--获取店铺审核记录的列表-->
+    <select id="getShopSolveLogInfoList" resultType="shopOpenSolveLogEntity">
+
+        SELECT
+        (id,
+        shop_ask_id,
+        aa01,
+        aa02,
+        state,
+        remark)
+        FROM
+        pt_business_shop_audit_logs
+    </select>
+
+    <!--获取一条店铺审核记录-->
+    <select id="getShopSolveLogInfoItem" parameterType="java.lang.Long" resultType="shopOpenSolveLogEntity">
+        SELECT
+        (id,
+        shop_ask_id,
+        aa01,
+        aa02,
+        state,
+        remark)
+        FROM
+        pt_business_shop_audit_logs
+        WHERE
+        id = #{id}
+    </select>
+
+</mapper>

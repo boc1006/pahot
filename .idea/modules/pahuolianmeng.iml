@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id="pahuolianmeng" external.linked.project.path="$MODULE_DIR$/../../../pahotUnion/trunk/09.Implements/pahuolianmeng" external.root.project.path="$MODULE_DIR$/../../../pahotUnion/trunk/09.Implements/pahuolianmeng" external.system.id="GRADLE" external.system.module.group="" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../../pahotUnion/trunk/09.Implements/pahuolianmeng">
+      <excludeFolder url="file://$MODULE_DIR$/../../../pahotUnion/trunk/09.Implements/pahuolianmeng/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../pahotUnion/trunk/09.Implements/pahuolianmeng/build" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../pahotUnion/trunk/09.Implements/pahuolianmeng/out" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pahot.upms.dao.MenuMapper" >
+
+    <!-- 根据id查找菜单 -->
+    <select id="selectById" parameterType="Integer" resultType="menu">
+        SELECT <include refid="menu_properties_all" /> FROM pt_upms_menu WHERE id = #{id}
+    </select>
+
+    <!-- 查找选中系统下的菜单列表 -->
+    <select id="selectBySid" parameterType="String" resultType="menu">
+        SELECT <include refid="menu_properties_all" /> FROM pt_upms_menu WHERE sid = #{sid} ORDER BY sort ASC
+    </select>
+
+    <!-- 新增菜单 -->
+    <insert id="insert" parameterType="menu">
+        INSERT INTO pt_upms_menu (<include refid = "menu_properties" />) VALUES (<include refid = "menu_params" />)
+    </insert>
+
+    <!-- 修改菜单 -->
+    <update id="update" parameterType="menu">
+        UPDATE pt_upms_menu <include refid="set_properties" /> WHERE id = #{id}
+    </update>
+
+    <!-- 启用或者禁用 -->
+    <update id="updateState">
+        UPDATE pt_upms_menu SET state = #{state} WHERE id = #{id}
+    </update>
+
+    <!-- menu字段，不包含id,state,ab01,ab02 -->
+    <sql id="menu_properties">
+        sid,
+        parentid,
+        name,
+        mtype,
+        btype,
+        icon,
+        jump,
+        uri,
+        hashkey,
+        sort,
+        level,
+        aa01,
+        aa02
+    </sql>
+
+    <!-- menu字段 -->
+    <sql id="menu_properties_all">
+        id,
+        sid,
+        parentid,
+        name,
+        mtype,
+        btype,
+        icon,
+        jump,
+        uri,
+        state,
+        hashkey,
+        sort,
+        level,
+        aa01,
+        aa02,
+        ab01,
+        ab02
+    </sql>
+
+    <!-- menu字段，不包含id,state,ab01和ab02 -->
+    <sql id="menu_params">
+        #{sid},
+        #{parentid},
+        #{name},
+        #{mtype},
+        #{btype},
+        #{icon},
+        #{jump},
+        #{uri},
+        #{hashkey},
+        #{sort},
+        #{level},
+        #{aa01},
+        #{aa02}
+    </sql>
+
+    <!-- 修改menu字段，不包含id、state、aa01和aa02-->
+    <sql id="set_properties">
+        <set>
+            <if test="sid != null">sid = #{sid},</if>
+            <if test="parentid != null">parentid = #{parentid},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="mtype != null">mtype = #{mtype},</if>
+            <if test="btype != null">btype = #{btype},</if>
+            <if test="icon != null">icon = #{icon},</if>
+            <if test="jump != null">jump = #{jump},</if>
+            <if test="uri != null">uri = #{uri},</if>
+            <if test="hashkey != null">hashkey = #{hashkey},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="level != null">level = #{level},</if>
+            <if test="ab01 != null">ab01 = #{ab01},</if>
+            <if test="ab02 != null">ab02 = #{ab02}</if>
+        </set>
+    </sql>
+
+</mapper>

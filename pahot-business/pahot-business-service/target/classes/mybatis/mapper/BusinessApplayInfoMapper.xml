@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pahot.business.dao.BusinessApplayInfoDao">
+
+
+    <!--增加一条审核记录-->
+    <insert id="addBusinessSubInfo" parameterType="businessApplayInfoEntity">
+        INSERT INTO pt_business_merchant_ask
+        (id,
+        merchant_name,
+        located_type,
+        phone,
+        username,
+        idcard,
+        address,
+        biz_lng,
+        biz_lat,
+        name,
+        address2,
+        shop_lng,
+        shop_lat,
+        shop_desc,
+        biz_scope,
+        cmttime,
+        remark,
+        info,
+        aa01,
+        aa02,
+        state,
+        remark2)
+        VALUES
+        (#{id},
+        #{merchant_name},
+        #{located_type},
+        #{phone},
+        #{username},
+        #{idcard},
+        #{address},
+        #{biz_lng},
+        #{biz_lat},
+        #{name},
+        #{address2},
+        #{shop_lng},
+        #{shop_lat},
+        #{shop_desc},
+        #{biz_scope},
+        #{cmttime},
+        #{remark},
+        #{info},
+        #{aa01},
+        #{aa02},
+        #{state},
+        #{remark2})
+    </insert>
+
+    <!--根据id获取一条记录-->
+    <select id="getBusinessSubInfoItem" parameterType="java.lang.Long" resultType="businessApplayInfoEntity">
+        SELECT
+        id,
+        merchant_name,
+        located_type,
+        phone,
+        username,
+        idcard,
+        address,
+        biz_lng,
+        biz_lat,
+        name,
+        address2,
+        shop_lng,
+        shop_lat,
+        shop_desc,
+        biz_scope,
+        cmttime,
+        remark,
+        info,
+        aa01,
+        aa02,
+        state,
+        remark2
+        FROM
+        pt_business_merchant_ask
+        where
+        id =#{id}
+    </select>
+
+    <!--获取申请记录的列表-->
+    <select id="getBusinessSubInfoList" resultType="businessApplayInfoEntity">
+        SELECT
+        id,
+        merchant_name,
+        located_type,
+        phone,
+        username,
+        idcard,
+        address,
+        biz_lng,
+        biz_lat,
+        name,
+        address2,
+        shop_lng,
+        shop_lat,
+        shop_desc,
+        biz_scope,
+        cmttime,
+        remark,
+        info,
+        aa01,
+        aa02,
+        state,
+        remark2
+        FROM
+        pt_business_merchant_ask
+
+    </select>
+
+    <!--更新一条审核记录的状态-->
+    <update id="updateBusinessSubInfoState" parameterType="businessApplayInfoEntity">
+        UPDATE pt_business_merchant_ask
+        <trim prefix="set" suffixOverrides=",">
+            <if test="aa01 != null and aa01 != '' ">aa01 = #{aa01},</if>
+            <if test="aa02 != null and aa02 != '' ">aa02 = #{aa02},</if>
+            <if test="state != null and state != '' ">state = #{state},</if>
+            <if test="remark2 != null and remark2 != '' ">remark2 = #{remark},</if>
+        </trim>
+        WHERE id = #{id}
+    </update>
+
+
+</mapper>

@@ -1,0 +1,89 @@
+package cn.pahot.sample.facade;
+
+import java.util.List;
+
+import com.boc.common.exception.BizException;
+import com.boc.common.metatype.DTO;
+import com.boc.common.page.PageParams;
+import com.github.pagehelper.PageInfo;
+
+import cn.pahot.sample.entity.UserEntity;
+
+/**
+ * 定义DUBBO业务接口
+ * <p>@Title: SampleFacade.java 
+ * <p>@Package cn.pahot.sample.facade 
+ * <p>@Description: TODO
+ * <p>@author huangjie hj87080234@gmail.com   
+ * <p>@date 2017年12月1日 上午11:10:42 
+ * <p>@version V1.0
+ * <p>Copyright © boc group.All Rights Reserved.
+ */
+public interface SampleFacade {
+	
+	/**
+	 * 基于单表操作-新增
+	 * @param ue
+	 */
+	void addUser(UserEntity ue) throws BizException;
+	
+	/**
+	 * 基于单表操作-修改
+	 * @param ue
+	 */
+	void updUser(UserEntity ue) throws BizException;
+	
+	/**
+	 * 删除操作
+	 * @param userid
+	 */
+	void delUser(Long userid) throws BizException;
+	
+	/**
+	 * 如果一个业务涉及到多表操作,或者传入的参数一个实体类满足不了,则传入一个DTO对象
+	 * @param param
+	 */
+	void doBussiness(DTO<String,String> param) throws BizException;
+	
+	/**
+	 * 如果一个业务涉及到的传入参数较少,且业务需要的参数值是固定的,则采用以下方式进行定义
+	 * @param id
+	 * @param state
+	 */
+	void doBussinessForParam(Integer id,String state) throws BizException;
+	
+	/**
+	 * 分布式事务-点对点DEMO
+	 * @param id
+	 * @param state
+	 * @param aa01 操作人ID
+	 */
+	void xaP2PBussiness(Integer id,String state,int aa01) throws BizException;
+	
+	/**
+	 * 分布式事务-订阅模式DEMO
+	 * @param id
+	 * @param state
+	 */
+	void xaSubBussiness(Integer id,String state,int aa01) throws BizException;
+	
+	/**
+	 * 分布式锁DEMO
+	 * @param id
+	 * @param state
+	 */
+	void dstributedLocks(Integer id,String state) throws BizException;
+	
+	/**
+	 * 查询结果集,不分页
+	 * @return
+	 */
+	List<UserEntity> queryUserList(String username) throws BizException;
+	
+	/**
+	 * 分页查询
+	 * @param params
+	 * @return
+	 */
+	PageInfo<UserEntity> queryUserListPages(PageParams<String> params) throws BizException;
+}

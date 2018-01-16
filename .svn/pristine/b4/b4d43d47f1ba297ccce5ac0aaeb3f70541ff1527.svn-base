@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pahot.business.dao.ShopInfoDao">
+
+
+    <!-- 添加商家审核日志-->
+    <insert id="addShopInfo" parameterType="shopInfoEntity">
+        insert into pt_business_merchant_shop
+            (`merchant_id`,
+            `name`,
+            `state`,
+            `address`,
+            `shop_lng`,
+            `shop_lat`,
+            `shop_desc`,
+            `banner`,
+            `biz_scope`,
+            `ton_time`,
+            `exp_date`)
+        values
+            (#{merchant_id},
+            #{name},
+            #{state},
+            #{address},
+            #{shop_lng},
+            #{shop_lat},
+            #{shop_desc},
+            #{banner},
+            #{biz_scope},
+            #{ton_time},
+            #{exp_date})
+    </insert>
+
+    <!--获取一条店铺信息-->
+    <select id="getShopItem" parameterType="java.lang.Integer" resultType="shopInfoEntity">
+
+        SELECT
+        (id,
+        merchant_id,
+        name,
+        state,
+        address,
+        shop_lng,
+        shop_lat,
+        shop_desc,
+        banner,
+        biz_scope,
+        ton_time,
+        exp_date)
+        FROM pt_business_merchant_shop
+        WHERE id = #{id}
+    </select>
+
+
+    <!--修改店铺信息-->
+
+    <update id="updateShopItem" parameterType="shopInfoEntity">
+
+        UPDATE pt_business_merchant_shop
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name != null and name != '' ">name = #{name},</if>
+            <if test="state != null and state != '' ">state = #{state},</if>
+            <if test="address != null and address != '' ">address = #{address},</if>
+            <if test="shop_lng != null and shop_lng != '' ">shop_lng = #{shop_lng},</if>
+            <if test="shop_lat != null and shop_lat != '' ">shop_lat = #{shop_lat},</if>
+
+            <if test="shop_desc != null and shop_desc != '' ">shop_desc = #{shop_desc},</if>
+            <if test="banner != null and banner != '' ">banner = #{banner},</if>
+            <if test="biz_scope != null and biz_scope != '' ">biz_scope = #{biz_scope},</if>
+            <if test="ton_time != null and ton_time != '' ">ton_time = #{ton_time},</if>
+            <if test="exp_date != null and exp_date != '' ">exp_date = #{exp_date},</if>
+        </trim>
+        WHEN id = #{id}
+
+
+    </update>
+
+
+    <!--获取店铺列表-->
+    <select id="getShopList" parameterType="java.lang.Integer" resultType="shopInfoEntity">
+
+        SELECT (id,
+                merchant_id,
+                name,
+                state,
+                address,
+                shop_lng,
+                shop_lat,
+                shop_desc,
+                banner,
+                biz_scope,
+                ton_time,
+                exp_date)
+        FROM pt_business_merchant_shop
+                <if test="name != null and name != '' ">
+                    WHERE merchant_id = #{merchant_id}
+                </if>
+    </select>
+
+</mapper>

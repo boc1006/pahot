@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pahot.goods.dao.GoodsTypeMapper">
+    <!-- 添加商品属性-->
+    <insert id="addGoodsType" parameterType="goodsType">
+        insert into pt_goods_type ( `name`,`ename`,`parentid`,`icon`,`sort`,`path`,`state`,`aa01`,`aa02`)
+        values ( #{name},#{ename},#{parentId},#{icon},#{sort},#{path},'01',#{aa01},#{aa02})
+    </insert>
+
+    <update id="updateGoodsType" parameterType="goodsType">
+        update pt_goods_type
+
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name!=null and name !='' ">`name`= #{name},</if>
+            <if test="ename!=null and ename !='' ">`ename`= #{ename},</if>
+            <if test="icon!=null and icon !='' ">`icon`= #{icon},</if>
+            <if test="sort!=null and sort !='' ">`sort`= #{sort},</if>
+            <if test="path!=null and path !='' ">`path`= #{path},</if>
+            <if test="ab01!=null and ab01 !='' ">ab01 = #{ab01},</if>
+            <if test="ab02!=null and ab02 !='' ">ab02 = #{ab02},</if>
+        </trim>
+
+
+        where `state`!=00 AND `id` = #{id}
+    </update>
+
+    <update id="updateGoodsTypeState" parameterType="dto">
+        update  pt_goods_type set  `state`= #{state},`ab01`= #{ab01},`ab02`= #{ab02} where `id`=#{id}  and `state`!='00'
+    </update>
+
+    <select id="getGoodsTypeForPage" parameterType="dto" resultType="goodsType">
+        SELECT `id`,`name`,`ename`,`parentid` AS 'parentId',`icon`,`sort`,`path`,`state`,`aa01`,`aa02`,`ab01`,`ab02`
+        from
+        pt_goods_type where
+        state != '00'
+        <if test="name != null">
+            and `name` = #{name}
+        </if>
+        <if test="ename != null">
+            and `ename` = #{ename}
+        </if>
+        <if test="parentId != null">
+            and `parentid` = #{parentId}
+        </if>
+        <if test="id != null">
+            AND `id` = #{id}
+        </if>
+    </select>
+
+
+    <select id="getGoodsTypeList" parameterType="goodsType" resultType="goodsType">
+        SELECT `id`,`name`,`ename`,`parentid` AS 'parentId',`icon`,`sort`,`path`,`state`,`aa01`,`aa02`,`ab01`,`ab02`
+        from pt_goods_type
+        WHERE `state`!='00'
+        <if test="id != null">
+            AND `id` = #{id}
+        </if>
+        <if test="name != null">
+            AND `name` = #{name}
+        </if>
+        <if test="ename != null">
+            AND `ename` = #{ename}
+        </if>
+        <if test="parentId != null">
+            AND `parentid` = #{parentId}
+        </if>
+        <if test="state != null">
+            AND `state` = #{state}
+        </if>
+    </select>
+
+
+    <select id="getGoodsTypeById" parameterType="int" resultType="goodsType">
+        SELECT `id`,`name`,`ename`,`parentid` AS 'parentId',`icon`,`sort`,`path`,`state`,`aa01`,`aa02`,`ab01`,`ab02`  FROM
+        pt_goods_type where  `id` = #{id}
+    </select>
+
+
+</mapper>

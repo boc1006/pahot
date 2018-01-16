@@ -1,0 +1,15 @@
+server.context-path=/example
+#页面默认前缀目录
+spring.mvc.view.prefix=/WEB-INF/
+#响应页面默认后缀
+spring.mvc.view.suffix=.jsp
+server.jsp-servlet.init-parameters.development=true
+#############################log4j#############################
+logging.level.root=${log4j.leve}
+logging.level.org.springframework=${log4j.leve}
+logging.level.com.ibatis=${log4j.leve}
+logging.level.java.sql=${log4j.leve}
+logging.pattern.console=%d %5p [%F:%L] : %m%n
+logging.file=logs/pahot-web-example.log
+logging.pattern.level=[%-5p][%d{yyyyMMdd HH:mm:ss,SSS}][%C{1}:%L] %m%n
+#############################log4j#############################

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pahot.business.dao.BusinessRoleDao">
+
+    <!--添加商家角色-->
+    <insert id="addBusinessRole" parameterType="businessRoleEntity">
+
+        INSERT INTO pt_business_merchant_role
+        (id,
+        merchant_id,
+        shop_id,
+        role_name,
+        aright,
+        hright,
+        state,
+        aa01,
+        aa02,
+        ab01,
+        ab02)
+        VALUES
+        (#{id},
+        #{merchant_id},
+        #{shop_id},
+        #{role_name},
+        #{aright},
+        #{hright},
+        #{state},
+        #{aa01},
+        #{aa02},
+        #{ab01},
+        #{ab02})
+
+    </insert>
+
+    <!--查找一个商家角色-->
+    <select id="getBusinessRoleItem" parameterType="java.lang.Long" resultType="businessRoleEntity">
+        SELECT
+        (id,
+        merchant_id,
+        shop_id,
+        role_name,
+        aright,
+        hright,
+        state,
+        aa01,
+        aa02,
+        ab01,
+        ab02)
+        FROM
+        pt_business_merchant_role
+        WHERE
+        id = #{id}
+    </select>
+
+    <!--获取角色列表-->
+    <select id="getBusinessRoleList" resultType="businessRoleEntity">
+        SELECT
+        (id,
+        merchant_id,
+        shop_id,
+        role_name,
+        aright,
+        hright,
+        state,
+        aa01,
+        aa02,
+        ab01,
+        ab02)
+        FROM
+        pt_business_merchant_role
+    </select>
+
+    <!--更新角色信息-->
+    <update id="updateBusinessRoleItem" parameterType="businessRoleEntity">
+
+        UPDATE pt_business_merchant_role
+        <trim prefix="set" suffixOverrides=",">
+            <if test="shop_id != null and shop_id != '' ">shop_id = #{shop_id},</if>
+            <if test="role_name != null and role_name != '' ">role_name = #{role_name},</if>
+            <if test="aright != null and aright != '' ">aright = #{aright},</if>
+            <if test="hright != null and hright != '' ">hright = #{hright},</if>
+            <if test="state != null and state != '' ">state = #{state},</if>
+            <if test="aa01 != null and aa01 != '' ">aa01 = #{aa01},</if>
+            <if test="aa02 != null and aa02 != '' ">aa02 = #{aa02},</if>
+            <if test="ab01 != null and ab01 != '' ">ab01 = #{ab01},</if>
+            <if test="ab02 != null and ab02 != '' ">ab02 = #{ab02},</if>
+        </trim>
+        WHERE id =#{id}
+    </update>
+
+</mapper>

@@ -1,0 +1,47 @@
+## validationQuery
+jdbc.pool.validationQuery=select 1
+
+## UPMS JDBC set
+upms.jdbc.url=jdbc\:mysql\://192.168.3.222\:3306/pt_upms?useUnicode\=true&characterEncoding\=utf-8
+upms.jdbc.username=root
+upms.jdbc.password=bNVOqb7WKLX5Bjnw+LMv92taj25KOxDimXxILPQjw42wgv+1lHzOH8kr97xDwWdhpY67QuYCS7sWN4W46YbkFA==
+upms.jdbc.initialSize=5
+upms.jdbc.minIdle=5
+upms.jdbc.maxActive=20
+upms.jdbc.maxWait=60000
+
+##Logger JDBC set
+logger.jdbc.url=jdbc\:mysql\://192.168.3.222\:3306/pt_logger?useUnicode\=true&characterEncoding\=utf-8
+logger.jdbc.username=root
+logger.jdbc.password=bNVOqb7WKLX5Bjnw+LMv92taj25KOxDimXxILPQjw42wgv+1lHzOH8kr97xDwWdhpY67QuYCS7sWN4W46YbkFA==
+logger.jdbc.initialSize=5
+logger.jdbc.minIdle=5
+logger.jdbc.maxActive=20
+logger.jdbc.maxWait=60000
+
+##XA JDBC set
+xa.jdbc.url=jdbc\:mysql\://192.168.3.222\:3306/pt_xa?useUnicode\=true&characterEncoding\=utf-8
+xa.jdbc.username=root
+xa.jdbc.password=bNVOqb7WKLX5Bjnw+LMv92taj25KOxDimXxILPQjw42wgv+1lHzOH8kr97xDwWdhpY67QuYCS7sWN4W46YbkFA==
+xa.jdbc.initialSize=5
+xa.jdbc.minIdle=5
+xa.jdbc.maxActive=20
+xa.jdbc.maxWait=60000
+
+##Message JDBC set
+message.jdbc.url=jdbc\:mysql\://192.168.3.222\:3306/pt_msg?useUnicode\=true&characterEncoding\=utf-8
+message.jdbc.username=root
+message.jdbc.password=bNVOqb7WKLX5Bjnw+LMv92taj25KOxDimXxILPQjw42wgv+1lHzOH8kr97xDwWdhpY67QuYCS7sWN4W46YbkFA==
+message.jdbc.initialSize=5
+message.jdbc.minIdle=5
+message.jdbc.maxActive=20
+message.jdbc.maxWait=60000
+
+##Goods JDBC set
+goods.jdbc.url=jdbc\:mysql\://192.168.3.222\:3306/pt_goods?useUnicode\=true&characterEncoding\=utf-8
+goods.jdbc.username=root
+goods.jdbc.password=bNVOqb7WKLX5Bjnw+LMv92taj25KOxDimXxILPQjw42wgv+1lHzOH8kr97xDwWdhpY67QuYCS7sWN4W46YbkFA==
+goods.jdbc.initialSize=5
+goods.jdbc.minIdle=5
+goods.jdbc.maxActive=20
+goods.jdbc.maxWait=60000

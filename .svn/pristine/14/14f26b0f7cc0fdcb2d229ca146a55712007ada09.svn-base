@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pahot.upms.dao.MenuRightsMapper" >
+
+    <!-- 根据id查询菜单权限 -->
+    <select id="selectById" parameterType="Integer" resultType="menuRights">
+        SELECT <include refid="menu_properties_all" /> FROM pt_upms_menu_hrights WHERE id = #{id}
+    </select>
+
+    <!-- 查找选中菜单下的操作权限列表 -->
+    <select id="selectByMid" parameterType="Integer" resultType="menuRights">
+        SELECT <include refid="menu_properties_all" /> FROM pt_upms_menu_hrights WHERE mid = #{mid} ORDER BY sort ASC
+    </select>
+
+    <!-- 新增 -->
+    <insert id="insert" parameterType="menuRights">
+        INSERT INTO pt_upms_menu_hrights (<include refid = "menu_properties" />) VALUES (<include refid = "menu_params" />)
+    </insert>
+
+    <!-- 修改 -->
+    <insert id="update" parameterType="menuRights">
+        UPDATE pt_upms_menu_hrights <include refid="set_properties_notmid" /> WHERE id = #{id}
+    </insert>
+
+    <!-- 启用或者禁用 -->
+    <update id="updateState">
+        UPDATE pt_upms_menu_hrights SET state = #{state} WHERE id = #{id}
+    </update>
+
+    <!-- menuRights字段，不包含id,state,ab01,ab02 -->
+    <sql id="menu_properties">
+        mid,
+        sid,
+        code,
+        name,
+        type,
+        sort,
+        hashkey,
+        aa01,
+        aa02
+    </sql>
+
+    <!-- menuRights字段 -->
+    <sql id="menu_properties_all">
+        id,
+        mid,
+        sid,
+        code,
+        name,
+        type,
+        sort,
+        state,
+        hashkey,
+        aa01,
+        aa02,
+        ab01,
+        ab02
+    </sql>
+
+    <!-- menuRights字段，不包含id,state,ab01和ab02 -->
+    <sql id="menu_params">
+        #{mid},
+        #{sid},
+        #{code},
+        #{name},
+        #{type},
+        #{sort},
+        #{hashkey},
+        #{aa01},
+        #{aa02}
+    </sql>
+
+    <!-- 修改menu字段，不包含id、state、aa01和aa02-->
+    <sql id="set_properties">
+        <set>
+            <if test="mid != null">mid = #{mid},</if>
+            <if test="sid != null">sid = #{sid},</if>
+            <if test="code != null">code = #{code},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="hashkey != null">hashkey = #{hashkey},</if>
+            <if test="ab01 != null">ab01 = #{ab01},</if>
+            <if test="ab02 != null">ab02 = #{ab02}</if>
+        </set>
+    </sql>
+
+
+    <sql id="set_properties_notmid">
+        <set>
+            <if test="code != null">code = #{code},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="hashkey != null">hashkey = #{hashkey},</if>
+            <if test="ab01 != null">ab01 = #{ab01},</if>
+            <if test="ab02 != null">ab02 = #{ab02}</if>
+        </set>
+    </sql>
+
+</mapper>

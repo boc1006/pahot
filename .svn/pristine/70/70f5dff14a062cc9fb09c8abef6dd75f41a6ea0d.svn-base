@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pahot.logger.dao.DubboProviderMapper" >
+
+	<!-- 查看接口是否存在 -->
+    <select id="existsServiceInfo" parameterType="java.util.Map" resultType="int">
+        select count(id) 
+          from server_info
+         where server_name = #{serverName} 
+           and method_name = #{methodName} 
+           and paramerercount = #{paramerercount}
+    </select>
+
+	<!-- 新增接口信息 -->
+    <insert id="saveServiceInfo" parameterType="java.util.Map">
+          insert into server_info (id,systemnum,system,server_ip,server_port,server_name,
+          						   method_name,paramerercount,paramerer,state,username,sqltext)
+                           values (null,#{systemCode}, #{system}, #{serverIp}, #{serverPort}, #{serverName}, 
+                                   #{methodName}, #{paramerercount}, #{paramerer}, #{state}, #{username},#{sql})
+    </insert>
+    
+    <!-- 修改接口信息 -->
+    <insert id="updateServiceInfo" parameterType="java.util.Map">
+        update server_info
+           set system = #{system},
+          	   systemnum = #{systemCode},
+          	   server_ip = #{serverIp},
+               server_port = #{serverPort},
+               paramerer = #{paramerer},
+               state = #{state},
+               username = #{username},
+               sqltext = #{sql}
+         where server_name = #{serverName}
+           and method_name = #{methodName}
+           and paramerercount = #{paramerercount}
+    </insert>
+</mapper>

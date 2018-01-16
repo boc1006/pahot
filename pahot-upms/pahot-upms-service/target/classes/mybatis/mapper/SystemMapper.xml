@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pahot.upms.dao.SystemMapper">
+
+    <!--系统管理相关-->
+    <update id="enableOrSys" parameterType="sManagerE">
+        UPDATE pt_upms_sysconf
+        SET
+            STATE = #{state},
+            AB01 = #{ab01},
+            AB02 = #{ab02}
+        WHERE  ID = #{id}
+    </update>
+
+    <select id="getSysList" parameterType="java.lang.String" resultType="sManagerE">
+        SELECT * FROM pt_upms_sysconf
+
+        <if test="state != null and state != '' ">
+            WHERE STATE = #{state}
+        </if>
+
+        ORDER BY SORT ASC
+    </select>
+
+    <select id="getSysItem" resultType="sManagerE">
+        SELECT  * FROM  pt_upms_sysconf WHERE  ID = #{id}
+    </select>
+
+    <update id="editSys" parameterType="sManagerE">
+        UPDATE pt_upms_sysconf
+
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name != null and name != '' ">NAME = #{name},</if>
+            <if test="type != null and type != '' ">TYPE = #{type},</if>
+            <if test="url != null and url != '' ">URL = #{url},</if>
+            <if test="remark != null and remark != '' ">REMARK = #{remark},</if>
+            <if test="sort != null ">SORT = #{sort},</if>
+            <if test="logo != null and logo != '' ">LOGO = #{logo},</if>
+            <if test="ab01 != null ">AB01 = #{ab01},</if>
+            <if test="ab02 != null ">AB02 = #{ab02},</if>
+        </trim>
+
+
+        WHERE ID = #{id}
+    </update>
+
+    <insert id="addItemToSys" parameterType="sManagerE">
+        insert into pt_upms_sysconf
+        (ID,
+        NAME,
+        TYPE,
+        URL,
+        REMARK,
+        LOGO,
+        SORT,
+        AA01,
+        AA02)
+        values
+        (#{id},
+        #{name},
+        #{type},
+        #{url},
+        <choose>
+            <when test="remark != null and remark != '' ">
+                #{remark}
+            </when>
+            <otherwise>
+                "暂无系统描述信息"
+            </otherwise>
+        </choose>
+        ,
+        <choose>
+            <when test="logo != null and logo != '' ">
+                #{logo}
+            </when>
+            <otherwise>
+                ""
+            </otherwise>
+        </choose>
+        ,
+        <choose>
+            <when test="sort != null and sort != '' ">
+                #{sort}
+            </when>
+            <otherwise>
+                1
+            </otherwise>
+        </choose>
+        ,
+        #{aa01},
+        #{aa02})
+
+    </insert>
+
+
+    <!--数据字典相关-->
+    <insert id="addDataIndexItem" parameterType="dIndexE">
+        INSERT INTO pt_upms_code
+        (SID,
+        FIELD,
+        FIELDNAME,
+        CODE,
+        CODEDESC,
+        SORT,
+        REMARK,
+        AA01,
+        AA02)
+        VALUES
+        (#{sid},
+        #{field},
+        #{fieldname},
+        #{code},
+        #{codedesc},
+        <choose>
+            <when test="sort != null and sort != '' ">
+                #{sort}
+            </when>
+            <otherwise>
+                1
+            </otherwise>
+        </choose>
+        ,
+        <choose>
+            <when test="remark != null and remark != '' ">
+                #{remark}
+            </when>
+            <otherwise>
+                "暂无字典描述信息"
+            </otherwise>
+        </choose>
+        ,
+        #{aa01},
+        #{aa02})
+    </insert>
+
+
+    <select id="getDataIndexItem" parameterType="java.lang.Long" resultType="dIndexE">
+        SELECT  * FROM pt_upms_code WHERE ID = #{id}
+    </select>
+
+
+    <update id="enableOrDisableDataIndexItem" parameterType="dIndexE">
+
+      UPDATE pt_upms_code
+      SET
+          ENABLED = #{enabled},
+          AB01 = #{ab01},
+          AB02 = ${ab02}
+      WHERE
+          ID = #{id}
+    </update>
+
+
+    <update id="disableEditDataIndexItem" parameterType="dIndexE">
+
+         UPDATE pt_upms_code
+      SET
+          EDITMODE = '00',
+          AB01 = #{ab01},
+          AB02 = ${ab02}
+      WHERE
+          ID = #{id}
+
+    </update>
+
+
+    <update id="editDataIndexItem" parameterType="dIndexE">
+
+        UPDATE pt_upms_code
+
+        <trim prefix="set" suffixOverrides=",">
+            <if test="sid!=null and sid !='' ">SID = #{sid},</if>
+            <if test="field!=null and field !='' ">FIELD = #{field},</if>
+            <if test="fieldname!=null and fieldname !='' ">FIELDNAME = #{fieldname},</if>
+            <if test="code!=null and code !='' ">CODE= #{code},</if>
+            <if test="codedesc!=null and codedesc !='' ">CODEDESC= #{codedesc},</if>
+            <if test="sort!=null ">SORT= #{sort},</if>
+            <if test="remark!=null and remark !='' ">REMARK = #{remark},</if>
+            <if test="ab01!=null and ab01 !='' ">AB01 = #{ab01},</if>
+            <if test="ab02!=null and ab02 !='' ">AB02 = #{ab02},</if>
+        </trim>
+
+        WHERE ID = #{id}
+
+    </update>
+
+    <select id="getDataIndexList" parameterType="java.lang.String" resultType="dIndexE">
+
+        SELECT * FROM pt_upms_code WHERE 1=1
+
+        <if test="sid != null and sid != ''">
+            AND SID=#{sid}
+        </if>
+        <if test="field != null and field != ''">
+            AND FIELD like concat('%', #{field}, '%')
+        </if>
+
+        ORDER BY SORT ASC
+
+    </select>
+</mapper>

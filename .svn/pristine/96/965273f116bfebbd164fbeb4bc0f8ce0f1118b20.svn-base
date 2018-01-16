@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pahot.sample.dao.SampleMapper" >
+
+	<!-- 添加用户 -->
+    <select id="addUser" parameterType="user">
+		insert into pt_sample_user (username,passwd,orgid,name,state,
+								  birthday,remark,sex,phone,aa01,aa02)
+					      values (#{username},#{passwd},#{orgid},#{name},#{state},
+					      		  #{birthday},#{remark},#{sex},#{phone},#{aa01},#{aa02})
+	</select>
+	
+	<!-- 修改用户基本信息 -->
+	<update id="updUser" parameterType="user">
+		update pt_sample_user
+		   set passwd = #{passwd},
+		       orgid  = #{orgid},
+		       name  = #{name},
+		       birthday  = #{birthday},
+		       remark  = #{remark},
+		       sex  = #{sex},
+		       phone  = #{phone},
+		       ab01  = #{ab01},
+		       ab02  = #{ab02}
+		 where id = #{id}
+	</update>
+	
+	<!-- 查询用户列表 -->
+	<select id="findByUserList" resultType="user">
+		select * from pt_sample_user
+	</select>
+	
+	<!-- 查询用户列表-分页 -->
+	<select id="findByUserListPage" resultType="user">
+		select * from pt_sample_user
+	</select>
+	
+</mapper>

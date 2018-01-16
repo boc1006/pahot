@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pahot.member.dao.MemberMapper" >
+	
+	<!-- 根据手机号码查询会员账号信息 -->
+	<select id="getMemberByPhoneOrId" parameterType="dto" resultType="account">
+		select id,username,password,name,tel,regtime,type,terminal
+		  from pt_member_account
+		 where 1=1
+		 <if test="username != null and username != '' ">
+           and username = #{username}
+         </if>
+		 <if test="id != null and id != '' ">
+           and id = #{id}
+         </if>
+	</select>
+	
+	<!-- 注册会员新用户 -->
+	<insert id="registryMember" parameterType="account" useGeneratedKeys="true" keyProperty="id">
+		insert into pt_member_account (username,password,name,
+		                               tel,regtime,type,terminal)
+		                       values (#{username},#{password},#{name},
+		                               #{tel},#{regtime},#{type},#{terminal})
+	</insert>
+	
+	<!-- 修改会员密码-->
+	<update id="changeMemberPasswd" parameterType="dto">
+		update pt_member_account
+		   set password = #{password}
+		 where id = #{id}
+	</update>
+	
+	<!-- 根据会员编号或UNIONID查询会员与微信绑定信息 -->
+	<select id="getMemberWXBind" parameterType="dto" resultType="bindWX">
+		select id,aid,openid,unionid,nickname,sex,province,
+			   city,country,headimgurl,privilegr,bindtime
+		  from pt_member_account_wx
+		 where 1=1
+		 <if test="unionid != null and unionid != '' ">
+           and unionid = #{unionid}
+         </if>
+		 <if test="aid != null and aid != '' ">
+           and aid = #{aid}
+         </if>
+	</select>
+	
+	<!-- 保存会员与微信的绑定信息 -->
+	<insert id="saveMemberWXBind" parameterType="bindWX">
+		insert into pt_member_account_wx (id,aid,openid,unionid,nickname,sex,province,
+										  city,country,headimgurl,privilegr,bindtime)
+								  values (#{id},#{aid},#{openid},#{unionid},#{nickname},#{sex},#{province},
+								  		  #{city},#{country},#{headimgurl},#{privilegr},#{bindtime})
+	</insert>
+	
+	<!-- 解除会员与微信的绑定关系 -->
+	<delete id="removeMemberWXBind" parameterType="java.lang.Long">
+		delete from pt_member_account_wx where id = #{id}
+	</delete>
+</mapper>

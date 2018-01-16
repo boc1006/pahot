@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pahot.goods.dao.GoodsSkuAttrMapper">
+    <!-- 添加商品属性-->
+    <insert id="addGoodsSkuAttr" parameterType="goodsSkuAttr">
+        insert into pt_goods_sku_attr (`goods_type_id`,`sku_spec_id`,`sku_spec_type`,`sku_spec_type_name`,`sku_spec_name`,`sku_spec_val`,`sort`,`aa01`,`aa02`)
+        values ( #{goodsTypeId},#{skuSpecId},#{skuSpecType},#{skuSpecTypeName},#{skuSpecName},#{skuSpecVal},#{sort},#{aa01},#{aa02})
+    </insert>
+
+    <update id="updateGoodsSkuAttr" parameterType="goodsSkuAttr">
+           update  pt_goods_sku_attr set  `goods_type_id` =#{goodsTypeId} ,`sku_spec_id`= #{skuSpecId},`sku_spec_type`=#{skuSpecType} ,`sku_spec_type_name`=#{skuSpecTypeName} ,`sku_spec_name`=#{skuSpecName} ,`sku_spec_val`= #{skuSpecVal},`sort`=#{sort} ,`ab01`=#{ab01},`ab02`=#{ab02}
+           where  id  = #{id}
+    </update>
+
+    <update id="updateSkuTypeNaeByGoodsTypeIdAndSkuSpecType" parameterType="dto">
+        update pt_goods_sku_attr set `sku_spec_type_name` =#{skuSpecTypeName},`ab01`=#{ab01},`ab02`=#{ab02}
+        where `goods_type_id` = #{goodsTypeId} AND `sku_spec_type` =#{skuSpecType}
+        <if test="skuSpecTypeName2 != null">
+            and sku_spec_type_name != #{skuSpecTypeName2}
+        </if>
+    </update>
+
+    <delete id="delGoodsSkuAttr" parameterType="int">
+      DELETE    from  pt_goods_sku_attr WHERE  id  = #{id}
+    </delete>
+    <!--分页查询商品sku-->
+    <select id="getGoodsSkuAttr" parameterType="dto" resultType="goodsSkuAttr">
+        select
+        `id`,`goods_type_id` AS 'goodsTypeId' ,`sku_spec_id` AS 'skuSpecId',`sku_spec_type` AS 'skuSpecType' ,
+        `sku_spec_type_name` AS 'skuSpecTypeName',`sku_spec_name` AS 'skuSpecName' ,`sku_spec_val` AS 'skuSpecVal'
+        ,`sort`,`aa01`,`aa02`,`ab01`,`ab02`
+        from pt_goods_sku_attr where 1=1
+        <if test="goodsTypeId != null">
+            and goods_type_id = #{goodsTypeId}
+        </if>
+        <if test="skuSpecId != null">
+            and sku_spec_id = #{skuSpecId}
+        </if>
+        <if test="skuSpecType != null">
+            and sku_spec_type = #{skuSpecType}
+        </if>
+        <if test="skuSpecName != null">
+            and sku_spec_name = #{skuSpecName}
+        </if>
+        order by `sku_spec_type`, `sort` asc
+    </select>
+
+
+    <select id="getSkuSpecTypeName" parameterType="dto" resultType="java.lang.String">
+        select DISTINCT `sku_spec_type_name` AS 'skuSpecTypeName' from pt_goods_sku_attr WHERE 1=1
+        <if test="id!= null">
+            and `id`= #{id}
+        </if>
+        <if test="goodsTypeId != null">
+            and goods_type_id = #{goodsTypeId}
+        </if>
+        <if test="skuSpecType != null">
+            and sku_spec_type = #{skuSpecType}
+        </if>
+    </select>
+
+
+    <select id="getGoodsSkuAttrList" parameterType="dto" resultType="goodsSkuAttr">
+        select
+        `id`,`goods_type_id` AS 'goodsTypeId' ,`sku_spec_id` AS 'skuSpecId',`sku_spec_type` AS 'skuSpecType' ,
+        `sku_spec_type_name` AS 'skuSpecTypeName',`sku_spec_name` AS 'skuSpecName' ,`sku_spec_val` AS 'skuSpecVal'
+        ,`sort`,`aa01`,`aa02`,`ab01`,`ab02`
+        from pt_goods_sku_attr where 1=1
+        <if test="id!= null">
+            and `id`= #{id}
+        </if>
+        <if test="goodsTypeId != null">
+            and goods_type_id = #{goodsTypeId}
+        </if>
+        <if test="skuSpecId != null">
+            and sku_spec_id = #{skuSpecId}
+        </if>
+        <if test="skuSpecType != null">
+            and sku_spec_type = #{skuSpecType}
+        </if>
+        <if test="skuSpecName != null">
+            and sku_spec_name = #{skuSpecName}
+        </if>
+        order by `sort` asc
+    </select>
+    <!--查询商品suk默认规格-->
+    <select id="getGoodsSkuSpect" parameterType="goodsSkuSpect" resultType="goodsSkuSpect">
+        select `id`,`type`,`typename`,`name`,`val`,`sort` from pt_goods_sku_spect
+        where 1=1
+        <if test="type != null">
+            and `type` = #{type}
+        </if>
+        <if test="typename != null">
+            and `typename` = #{typename}
+        </if>
+        ORDER by `type` ASC ,`sort` ASC
+    </select>
+
+    <delete id="delGoodsSkuAttrByGoodsTypeId" parameterType="int">
+        DELETE    from  pt_goods_sku_attr WHERE  goods_type_id  = #{goodsTypeId}
+    </delete>
+</mapper>

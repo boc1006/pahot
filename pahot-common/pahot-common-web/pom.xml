@@ -1,0 +1,86 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>cn.pahot</groupId>
+		<artifactId>pahot-common</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>pahot-common-web</artifactId>
+	<packaging>jar</packaging>
+	<name>pahot-common-web</name>
+	<description>pahot-common-web</description>
+	<dependencies>
+		<!-- Application Dependency Begin -->
+		<dependency>
+			<groupId>cn.pahot</groupId>
+			<artifactId>pahot-common-utils</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.pahot</groupId>
+			<artifactId>pahot-logger-facade</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.pahot</groupId>
+			<artifactId>pahot-xa-facade</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.pahot</groupId>
+			<artifactId>pahot-upms-facade-auth</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<!-- Application Dependency End -->
+		
+		<!-- SpringBoot Dependency Begin -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-validator</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+            		<groupId>ch.qos.logback</groupId>
+            		<artifactId>logback-classic</artifactId>
+            	</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- SpringBoot Dependency Begin -->
+		
+		<!-- Common Dependency Begin -->
+		<dependency>
+			<groupId>com.dgg.web</groupId>
+			<artifactId>common</artifactId>
+		</dependency>
+		<!-- Common Dependency End -->
+		
+		<!-- Servlet Dependency Begin -->
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+		<dependency>
+           <groupId>javax.servlet</groupId>
+           <artifactId>jstl</artifactId>
+       </dependency>
+		<dependency>  
+		  	<groupId>org.apache.tomcat.embed</groupId>  
+		  	<artifactId>tomcat-embed-jasper</artifactId>  
+		  	<scope>provided</scope>  
+		</dependency>
+		<!-- Servlet Dependency End -->
+		
+	</dependencies>
+</project>

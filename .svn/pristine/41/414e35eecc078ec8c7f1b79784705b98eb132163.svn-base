@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pahot.upms.dao.SystemSettingMapper">
+
+    <!-- 通过主键id查找 -->
+    <select id="selectById" parameterType="Integer" resultType="systemSetting">
+        SELECT
+        <include refid="properties_all"/>
+        FROM pt_upms_system_setting WHERE id = #{id}
+    </select>
+    <!-- 查找系统变量列表 -->
+    <select id="selectBySid" parameterType="String" resultType="systemSetting">
+        SELECT
+        <include refid="properties_all"/>
+        FROM pt_upms_system_setting WHERE sid = #{sid}
+    </select>
+
+    <!-- 根据系统变量key查找变量 -->
+    <select id="selectByKey" parameterType="String" resultType="systemSetting">
+        SELECT
+        <include refid="properties_all"/>
+        FROM pt_upms_system_setting WHERE setKey = #{setKey}
+    </select>
+
+    <!-- 查找所有的系统变量列表 -->
+    <select id="selectAll" resultType="systemSetting">
+        SELECT
+        <include refid="properties_all"/>
+        FROM pt_upms_system_setting
+    </select>
+
+    <!-- 添加 -->
+    <insert id="insert" parameterType="systemSetting">
+        INSERT INTO pt_upms_system_setting
+          (sid, setKey, setValue, setDesc, aa01, aa02)
+        VALUES
+          (#{sid}, #{setKey}, #{setValue}, #{setDesc}, #{aa01}, #{aa02})
+    </insert>
+
+    <!-- 修改 -->
+    <update id="update" parameterType="systemSetting">
+        UPDATE pt_upms_system_setting
+        <set>
+            <if test="sid != null">sid = #{sid},</if>
+            <if test="setKey != null">setKey = #{setKey},</if>
+            <if test="setValue != null">setValue = #{setValue},</if>
+            <if test="setDesc != null">setDesc = #{setDesc},</if>
+            <if test="enable != null">enable = #{enable},</if>
+            <if test="editMode != null">editMode = #{editMode},</if>
+            <if test="ab01 != null">ab01 = #{ab01},</if>
+            <if test="ab02 != null">ab02 = #{ab02},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 启用或禁用 -->
+    <update id="updateState">
+        UPDATE pt_upms_system_setting
+        SET enable = #{enable}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 所有的属性 -->
+    <sql id="properties_all">
+        id, sid, setKey, setValue, setDesc, enable, editMode, aa01, aa02, ab01, ab02
+    </sql>
+
+</mapper>

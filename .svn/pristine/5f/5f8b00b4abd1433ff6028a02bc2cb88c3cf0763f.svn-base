@@ -1,0 +1,227 @@
+package cn.pahot.sample.biz;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+
+import com.alibaba.fastjson.JSONObject;
+import com.boc.common.core.biz.AbstractPageBuilder;
+import com.boc.common.core.biz.DefaultPageBuilder;
+import com.boc.common.core.dao.ack.MainTransactionACKDao;
+import com.boc.common.core.lock.CuratorLock;
+import com.boc.common.enums.PropertiesHelper;
+import com.boc.common.exception.BizException;
+import com.boc.common.metatype.DTO;
+import com.boc.common.page.PageParams;
+import com.boc.common.utils.DateUtils;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
+
+import cn.pahot.logger.entity.BizLogEntity;
+import cn.pahot.sample.constant.SampleConst;
+import cn.pahot.sample.dao.SampleMapper;
+import cn.pahot.sample.entity.UserEntity;
+import cn.pahot.sample.exception.SampleException;
+import cn.pahot.xa.entity.MessageEntity;
+import cn.pahot.xa.enums.MessageTypeEnum;
+import cn.pahot.xa.facade.CapXaFacade;
+
+/**
+ * 业务处理
+ * <p>@Title: SampleBiz.java 
+ * <p>@Package cn.pahot.sample.biz 
+ * <p>@Description: TODO
+ * <p>@author huangjie hj87080234@gmail.com   
+ * <p>@date 2017年12月1日 下午1:14:05 
+ * <p>@version V1.0
+ * <p>Copyright © boc group.All Rights Reserved.
+ */
+@Service("sampleBiz")
+public class SampleBiz {
+	//使用redis
+	@Autowired
+    private StringRedisTemplate stringRedisTemplate;
+	//使用redis
+	@Autowired  
+    private RedisTemplate redisTemplate;
+	
+	@Autowired
+	private SampleMapper sampleDao;
+	
+	@Autowired
+	private CapXaFacade capXaFacade;
+	
+	@Autowired
+	private MainTransactionACKDao mainTransactionACKDao;
+	
+	/**
+	 * 记录业务日志
+	 */
+	public void bizLogger(int aa01) {
+		MessageEntity entity = new MessageEntity();
+    	entity.setQueuename(PropertiesHelper.LOGGER_QUEUENAME_BIZ);
+    	BizLogEntity bizEntity = new BizLogEntity();
+    	bizEntity.setSid(PropertiesHelper.SYSTEM_ID_UPMS);
+    	bizEntity.setMethod_name(this.getClass().getName()+".bizLogger()");
+    	bizEntity.setBef_data("{}");//修改前数据,如果是新增,则传{},为了更全面记录日志,最好把修改的整条数据写入进去
+    	bizEntity.setAft_data("{}");//修改后数据,为了更全面记录日志,最好把修改的整条数据写入进去
+    	bizEntity.setHandler(BizLogEntity.UPDATE);
+    	bizEntity.setRemark("修改商品基本信息");//业务操作描述,尽量清楚描述业务操作的功能
+    	bizEntity.setAa01(aa01);//操作人编号
+    	bizEntity.setAa02(DateUtils.getCurrDateTimeToLong());//操作时间
+    	entity.setContent(JSONObject.toJSONString(bizEntity));
+    	//为了保证日志记录保存失败导致业务不能正常执行,最好在try-catch块中调用业务日志记录接口
+    	try {
+    		capXaFacade.directSendMessage(entity);
+    	} catch (BizException e) {
+    		e.printStackTrace();//需要打印异常日志,以更好的查找异常日志原因
+    	}
+	}
+	
+	public void addUser(UserEntity ue) throws BizException {
+		if(StringUtils.isEmpty(ue)) {
+			throw SampleException.PARAM_IS_NULL.newInstance("用户信息");
+		}
+		//TODO 实现具体的业务逻辑
+		sampleDao.addUser(ue);
+	}
+
+	public void updUser(UserEntity ue) throws BizException {
+		if(StringUtils.isEmpty(ue)) {
+			throw SampleException.PARAM_IS_NULL.newInstance("用户信息");
+		}
+		
+		if(ue.getId()==0) {
+			throw SampleException.PARAM_IS_NULL.newInstance("用户ID");
+		}
+		//TODO 实现具体的业务逻辑
+		sampleDao.updUser(ue);
+	}
+
+	public void delUser(Long userid) throws BizException {
+		if(userid==0) {
+			throw SampleException.PARAM_IS_NULL.newInstance("用户ID");
+		}
+		//TODO 实现具体的业务逻辑
+	}
+
+	public void doBussiness(DTO<String,String> param) throws BizException {
+		if(StringUtils.isEmpty(param)) {
+			throw SampleException.PARAM_IS_NULL.newInstance("param");
+		}
+		//TODO 实现具体的业务逻辑
+		String p1 = param.get("k1");
+		String p2 = param.get("k2");
+		String p3 = param.get("k3");
+	}
+
+	public void doBussinessForParam(Integer id, String state) throws BizException {
+		if(id == 0 || StringUtils.isEmpty(state)) {
+			throw SampleException.PARAM_IS_NULL.newInstance("id|state");
+		}
+		//TODO 实现具体的业务逻辑
+	}
+
+	/**
+	 * 分布式事务业务必须处理于个事务内
+	 * @param id
+	 * @param state
+	 * @throws BizException
+	 */
+	@Transactional 
+	public long xaP2PBussiness(Integer id, String state,int aa01) throws BizException {
+		if(id == 0 || StringUtils.isEmpty(state) || aa01==0) {
+			throw SampleException.PARAM_IS_NULL.newInstance("id|state|aa01");
+		}
+		//构建一个MessageEntity
+		MessageEntity me = new MessageEntity();
+		me.setType(MessageTypeEnum.JSON.key);
+		me.setQueuename(PropertiesHelper.SAMPLE_QUEUENAME_DEMO);
+		me.setAa01(String.valueOf(aa01));
+		me.setAa02(DateUtils.getCurrDateTimeToLong());
+		me.setSource(PropertiesHelper.SYSTEM_ID_UPMS);//业务系统编号
+		me.setRemark("业务进行描述");//可对该业务进行描述
+		UserEntity ue = new UserEntity();//这里构建一个消息体,在消息消费端获取该值进行具体业务处理
+		me.setContent(JSONObject.toJSONString(ue));//设置消息内容体,该内容为一个JSON格式
+		
+		//返回一个messageId
+		long messageId = capXaFacade.saveMessageWaitingConfirm(me);
+		
+		//TODO 实现自己的业务逻辑
+		
+		//保存messageId
+		mainTransactionACKDao.saveMainTransactionACKDao(messageId);
+		
+		return messageId;
+	}
+
+	/**
+	 * 实现一个可订阅的分布式事务,业务处理必须在一个事务内
+	 * @param id
+	 * @param state
+	 * @throws BizException
+	 */
+	@Transactional
+	public long xaSubBussiness(Integer id, String state,int aa01) throws BizException {
+		if(id == 0 || StringUtils.isEmpty(state) || aa01==0) {
+			throw SampleException.PARAM_IS_NULL.newInstance("id|state|aa01");
+		}
+
+		UserEntity ue = new UserEntity();//这里构建一个消息体,在消息消费端获取该值进行具体业务处理
+		Long messageId = capXaFacade.saveSubMessageWaitingConfirm(SampleConst.SAMPLE_SUBID, 
+				JSONObject.toJSONString(ue), "业务描述内容", String.valueOf(aa01), "操作人姓名");
+
+		//TODO 实现自己的业务逻辑
+		
+
+		//保存messageId
+		mainTransactionACKDao.saveMainTransactionACKDao(messageId);
+		return messageId;
+	}
+
+	/**
+	 * 分布式锁实现例子
+	 * 所有进入该业务方法的请求,在上一个业务处理未完成之前,所有的请求进行排队等待,直接上一个业务释放该锁
+	 * @param id
+	 * @param state
+	 * @throws BizException
+	 */
+	@CuratorLock(id=SampleConst.LOCK_NO_SAMPLE_1001)
+	public void dstributedLocks(Integer id, String state) throws BizException {
+		if(id == 0 || StringUtils.isEmpty(state)) {
+			throw SampleException.PARAM_IS_NULL.newInstance("id|state");
+		}
+		
+		//TODO 实现自己的业务逻辑
+	}
+
+	public List<UserEntity> queryUserList(String username) throws BizException {
+		return sampleDao.findByUserList();
+	}
+
+	/**
+	 * 分页处理
+	 * @param params
+	 * @return
+	 * @throws BizException
+	 */
+	public PageInfo<UserEntity> queryUserListPages(PageParams<String> params) throws BizException {
+		
+		PageInfo<UserEntity> pi = DefaultPageBuilder.build(params, 
+				new AbstractPageBuilder<UserEntity,String>() {
+			
+			@Override
+			public Page<UserEntity> build(String param) throws BizException {
+				//TODO 业务逻辑处理
+				
+				return sampleDao.findByUserListPage();
+			}
+		});
+		return pi;
+	}
+}

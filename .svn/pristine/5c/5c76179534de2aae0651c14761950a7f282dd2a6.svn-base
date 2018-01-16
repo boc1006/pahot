@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pahot.message.dao.sms.SmsMapper" >
+	
+	<!-- 保存短信发送  -->
+	<insert id="saveSmsTask" parameterType="sms">
+		insert into pt_msg_sms (id,channel,tid,sid,phones,contents,otherparams,
+								busdesc,state,maxretry,retry,bizinvoketime,tasktime)
+						values (#{id},#{channel},#{tid},#{sid},#{phones},#{contents},#{otherparams},
+								#{busdesc},#{state},#{maxretry},#{retry},#{bizinvoketime},#{tasktime})
+	</insert>
+	
+	<!-- 更新短信发送内容 -->
+	<update id="updSmsTask" parameterType="sms">
+		update pt_msg_sms
+		   set modifytime = #{modifytime}
+		   <if test="state != null and state != '' ">
+   		   	   , state = #{state}
+   		   </if>
+		   <if test="retry != null and retry != '' ">
+   		   	   , retry = #{retry}
+   		   </if>
+		   <if test="tasktime != null and tasktime != '' ">
+   		   	   , tasktime = #{tasktime}
+   		   </if>
+		   <if test="sendtime != null and sendtime != '' ">
+   		   	   , sendtime = #{sendtime}
+   		   </if>
+		   <if test="returetime != null and returetime != '' ">
+   		   	   , returetime = #{returetime}
+   		   </if>
+		   <if test="returnstate != null and returnstate != '' ">
+   		   	   , returnstate = #{returnstate}
+   		   </if>
+		   <if test="returnmsg != null and returnmsg != '' ">
+   		   	   , returnmsg = #{returnmsg}
+   		   </if>
+		   <if test="returncontent != null and returncontent != '' ">
+   		   	   , returncontent = #{returncontent}
+   		   </if>
+		 where id = #{id}
+	</update>
+	
+	<!-- 查询短信发送任务列表 -->
+	<select id="querySmsTaskList" parameterType="dto" resultType="sms">
+		select id,channel,tid,sid,phones,contents,otherparams,busdesc,
+			   state,maxretry,retry,bizinvoketime,tasktime,sendtime,
+			   returetime,returnstate,returnmsg,returncontent,modifytime
+		  from pt_msg_sms
+		 where find_in_set(state,#{state})
+		   and tasktime &lt;= #{tasktime}
+	</select>
+	
+	<!-- 查询IP地址是否在白名单或黑名单内 -->
+	<select id="getIpListForIp" parameterType="java.lang.Integer" resultType="iplist">
+		select id,ip_idx,ipaddr,worb,validtime
+		  from pt_msg_sms_iplist
+		 where ip_idx = #{ip_idx}
+	</select>
+	
+	<!-- 保存IP黑/白名单 -->
+	<insert id="saveIpList" parameterType="iplist">
+		insert into pt_msg_sms_iplist (id,ip_idx,ipaddr,worb,validtime)
+		                       values (#{id},#{ip_idx},#{ipaddr},#{worb},#{validtime})
+	</insert>
+	
+	<!-- 修改IP白名单 -->
+	<update id="updateIpList" parameterType="iplist">
+		update pt_msg_sms_iplist
+		   set worb = #{worb},
+		       validtime = #{validtime}
+		 where id = #{id}
+	</update>
+	
+	<!-- 根据IP地址查询短信验证码IP有效性 -->
+	<select id="getIpVercodeForIp" parameterType="java.lang.Integer" resultType="vercodeip">
+		select id,ipaddr_idx,ipaddr,times,maxtimes,validtime,updtime
+		  from pt_msg_sms_vercode_ip
+		 where ipaddr_idx = #{ip_idx}
+	</select>
+	
+	<!-- 保证IP黑/白名单 -->
+	<insert id="saveIpVercodeList" parameterType="vercodeip">
+		insert into pt_msg_sms_vercode_ip (id,ipaddr_idx,ipaddr,times,maxtimes,validtime,updtime)
+		                           values (#{id},#{ipaddr_idx},#{ipaddr},#{times},#{maxtimes},#{validtime},#{updtime})
+	</insert>
+	
+	<!-- 修改IP白名单 -->
+	<update id="updateIpVercodeList" parameterType="vercodeip">
+		update pt_msg_sms_vercode_ip
+		   set times = #{times},
+		       maxtimes = #{maxtimes},
+		       validtime = #{validtime},
+		       updtime = #{updtime}
+		 where id = #{id}
+	</update>
+	
+	<!-- 保存短信验证码发送记录 -->
+	<insert id="saveSmsVercodeLog" parameterType="vercodelog">
+		insert into pt_msg_sms_vercode_log (id,ipaddr,phone,content,sendtime)
+		                            values (#{id},#{ipaddr},#{phone},#{content},#{sendtime})
+	</insert>
+	
+	<!-- 根据手机号码获取短信验证码记录 -->
+	<select id="queryCodeByPhone" parameterType="java.lang.String" resultType="code">
+		select id,phone,code,validity,extime
+		  from pt_msg_sms_code
+		 where phone = #{phone}
+	</select>
+	
+	<!-- 保存发送短信验证码 -->
+	<insert id="saveCode" parameterType="code">
+		insert into pt_msg_sms_code (id,phone,code,validity,extime)
+		                     values (#{id},#{phone},#{code},#{validity},#{extime})
+	</insert>
+	
+	<!-- 修改短信验证码 -->
+	<update id="updateCode" parameterType="code">
+		update pt_msg_sms_code
+		   set code = #{code},
+		       validity = #{validity},
+		       extime = #{extime}
+		 where phone = #{phone}
+	</update>
+</mapper>

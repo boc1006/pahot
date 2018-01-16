@@ -1,0 +1,76 @@
+# 环境
+env=development
+##############访问/异常日志记录方式file/db###############
+logger.record=file
+################顶级域名#################
+domain=admin.pahotest.cn
+
+# 运营平台Cookie配置
+admin.cookie.name=PAHOT_ADMIN_COOKIE
+admin.token.name=PAHOT_ADMIN_TOKEN
+
+################SESSION过期时间(秒)#################
+expire=600
+
+################系统编号#################
+upms.sysid=100000
+logger.sysid=100001
+xa.sysid=100002
+goods.sysid=100003
+
+#############redis配置 begin#############
+# Redis数据库索引（默认为0）
+spring.redis.database=0
+# Redis服务器地址
+spring.redis.host=192.168.3.220
+# Redis服务器连接端口
+spring.redis.port=6379
+# Redis服务器连接密码（默认为空）
+spring.redis.password=
+# 连接池最大连接数（使用负值表示没有限制）
+spring.redis.pool.max-active=8
+# 连接池最大阻塞等待时间（使用负值表示没有限制）
+spring.redis.pool.max-wait=-1
+# 连接池中的最大空闲连接
+spring.redis.pool.max-idle=8
+# 连接池中的最小空闲连接
+spring.redis.pool.min-idle=0
+# 连接超时时间（毫秒）
+spring.redis.timeout=0
+#############redis配置 end###############
+
+#############ActiveMQ配置 begin#############
+mq.brokerURL=failover\:(tcp\://192.168.3.220\:61616)?jms.prefetchPolicy.queuePrefetch=50&jms.redeliveryPolicy.maximumRedeliveries=1&randomize=false&initialReconnectDelay=1000&maxReconnectDelay=30000
+mq.userName=admin
+mq.password=admin
+mq.pool.maxConnections=50
+
+##message timeout (消息存放超过下面设置的时间才可以取出处理)
+message.handle.duration=180
+##消息最多发送次数
+message.max.send.times = 5
+## 消息间隔发送时间  时间单位分
+message.send.1.time = 0
+message.send.2.time = 1
+message.send.3.time = 2
+message.send.4.time = 5
+message.send.5.time = 15
+#############ActiveMQ配置 end#############
+
+################短信相关参数配置 Begin####################
+#短信验证码IP有效时间（分钟）
+sms.validtime=1440
+#短信验证码IP在有时间内最多发送次数
+sms.validtime.times=20
+################短信相关参数配置 End######################
+
+#############分布式事务-消息队列begin#############
+#Logger access queueName
+logger.queueName.access=logger.queueName.access
+#Logger business queueName
+logger.queueName.business=logger.queueName.business
+#Logger exception queueName
+logger.queueName.exception=logger.queueName.exception
+#事例
+sample.queueName.demo=logger.queueName.demo
+#############分布式事务-消息队列end#############

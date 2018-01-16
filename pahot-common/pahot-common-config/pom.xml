@@ -1,0 +1,99 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>cn.pahot</groupId>
+		<artifactId>pahot-common</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>pahot-common-config</artifactId>
+	<packaging>jar</packaging>
+	<name>pahot-common-config</name>
+	<description>pahot-common-config</description>
+	<profiles>
+		<profile>
+			<!-- 本地开发环境 -->
+			<id>development</id>
+			<properties>
+				<profiles.active>development</profiles.active>
+				<current.timestamp>${current.time}</current.timestamp>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<!-- 测试环境 -->
+			<id>tester</id>
+			<properties>
+				<profiles.active>tester</profiles.active>
+				<current.timestamp>${current.time}</current.timestamp>
+			</properties>
+		</profile>
+
+		<profile>
+			<!-- 预发布环境 -->
+			<id>prerelease</id>
+			<properties>
+				<profiles.active>prerelease</profiles.active>
+				<current.timestamp>${current.time}</current.timestamp>
+			</properties>
+		</profile>
+
+		<profile>
+			<!-- 生产环境 -->
+			<id>production</id>
+			<properties>
+				<profiles.active>production</profiles.active>
+				<current.timestamp>${current.time}</current.timestamp>
+			</properties>
+		</profile>
+	</profiles>
+	<build>
+		<resources>
+			<!-- 指定 src/main/resources下所有文件及文件夹为资源文件 -->
+			<resource>
+				<directory>src/main/resources</directory>
+				<targetPath>${project.build.directory}/classes</targetPath>
+				<includes>
+					<include>**/*</include>
+				</includes>
+				<excludes>
+					<exclude>production/*</exclude>
+					<exclude>development/*</exclude>
+					<exclude>tester/*</exclude>
+					<exclude>prerelease/*</exclude>
+				</excludes>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<filtering>true</filtering> <!-- 加上filter会过滤该资源路径中的文件 -->
+				<directory>src/main/resources/${profiles.active}</directory>
+				<includes>
+					<include>*.properties</include>
+				</includes>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.10</version>
+				<executions>
+					<execution>
+						<id>timestamp-property</id>
+<!-- 						<goals> -->
+<!-- 							<goal>timestamp-property</goal> -->
+<!-- 						</goals> -->
+					</execution>
+				</executions>
+				<configuration>
+					<name>current.time</name>
+					<pattern>yyyyMMddHHmmss</pattern>
+					<timeZone>GMT+8</timeZone>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

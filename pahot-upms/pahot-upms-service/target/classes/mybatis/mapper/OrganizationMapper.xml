@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pahot.upms.dao.OrganizationMapper">
+    <!-- 添加用户-->
+    <insert id="addUser" parameterType="user">
+        insert into pt_upms_user (username,passwd,orgid,name,state,
+        birthday,remark,sex,phone,aa01,aa02)
+        values (#{username},'670b14728ad9902aecba32e22fa4f6bd',#{orgid},#{name},'01',
+        #{birthday},#{remark},#{sex},#{phone},#{aa01},#{aa02})
+    </insert>
+
+
+    <!-- 更具用户名统计数据量 -->
+    <select id="findUserByUserName" parameterType="String" resultType="long">
+        select   count(*) from pt_upms_user  where  username = #{username}
+    </select>
+
+
+    <!-- 更新用户 -->
+    <update id="updUser" parameterType="user">
+        update pt_upms_user
+        set username = #{username},
+        orgid  = #{orgid},
+        name  = #{name},
+        birthday  = #{birthday},
+        remark  = #{remark},
+        sex  = #{sex},
+        phone  = #{phone},
+        ab01  = #{ab01},
+        ab02  = #{ab02}
+        where id = #{id} and state!= '00'
+    </update>
+
+    <!-- 注销用户 -->
+    <update id="cancelUser" parameterType="user">
+        update pt_upms_user
+        set state = '00',
+         ab01  = #{ab01},
+         ab02  = #{ab02}
+        where id = #{id}  and state !='00'
+    </update>
+
+
+    <!-- 冻结用户 -->
+    <update id="freezeUser" parameterType="user">
+        update pt_upms_user
+        set state = '02',
+        ab01  = #{ab01},
+        ab02  = #{ab02}
+        where id = #{id}  and  state = '01'
+    </update>
+
+    <!-- 解冻用户 -->
+    <update id="unFreezeUser" parameterType="user">
+        update pt_upms_user
+        set state = '01',
+        ab01  = #{ab01},
+        ab02  = #{ab02}
+        where id = #{id}  and  state = '02'
+    </update>
+
+    <!-- 重置密码 -->
+    <update id="resetPwd" parameterType="user">
+        update pt_upms_user
+        set passwd = '670b14728ad9902aecba32e22fa4f6bd',
+        ab01  = #{ab01},
+        ab02  = #{ab02}
+        where id = #{id} and state != '00'
+    </update>
+
+
+    <!-- 分页查询用户 -->
+    <select id="findByUserListPage" parameterType="dto" resultType="user">
+        select pu.`id`, pu.`username`, pu.`orgid`, pu.`name`, pu.`state`, pu.`birthday`, pu.`remark`, pu.`sex`,
+        pu.`phone`, pu.`aa01`, pu.`aa02`, pu.`ab01`,
+        pu.`ab02` from pt_upms_user pu INNER JOIN pt_upms_org po on pu.ORGID = po.ID
+        where pu.state != '00'
+        <if test="orgId != null">
+            AND (
+            orgId = #{orgId}
+            or po.levels like CONCAT(#{levels},'%')
+            )
+        </if>
+        order by id asc
+    </select>
+    <!--查询所有用户-->
+    <select id="queryUser" parameterType="dto" resultType="user">
+        select `id`, `username`, `orgid`, `name`, `state`, `birthday`, `remark`, `sex`, `phone`, `aa01`, `aa02`, `ab01`,
+        `ab02` from pt_upms_user where state != '00'
+        <if test="orgid != null">
+            orgid = #{orgid}
+        </if>
+        order by id asc
+    </select>
+    <!--新增部门-->
+    <insert id="addOrganization" parameterType="organization">
+       insert  into  pt_upms_org  (name,parentid,tel,fax,address,uid,remark,levels,sort,aa01,aa02,state)
+       values(#{name},#{parentid},#{tel},#{fax},#{address}
+       ,0,#{remark},#{levels},#{sort},#{aa01},#{aa02},'01')
+    </insert>
+    <!-- 更新部门 -->
+    <update id="updOrganization" parameterType="organization">
+        update  pt_upms_org    set name = #{name} ,
+        parentid=#{parentid},tel=#{tel},fax=#{fax},address=#{address},
+        remark=#{remark},levels=#{levels},sort=#{sort},ab01=#{ab01},ab02=#{ab02}
+        where state =  '01' and   id = #{id}
+    </update>
+
+    <!-- 查询所有部门 -->
+    <select id="queryOrganization" parameterType="dto" resultType="organization">
+       select `id`, `name`, `parentid`, `tel`, `fax`, `address`, `uid`, `remark`, `levels`, `sort`, `state`, `aa01`, `aa02`, `ab01`, `ab02`  from pt_upms_org   where state !=  '00'
+    </select>
+
+
+    <!-- 启用部门 -->
+    <update id="startOrganization" parameterType="organization">
+        update  pt_upms_org    set state = '01' ,ab01 = #{ab01},
+         ab02 = #{ab02}
+        where state =  '02'  and    id = #{id}
+    </update>
+
+    <!-- 禁用部门 -->
+    <update id="forbiddenOrganization" parameterType="organization">
+        update  pt_upms_org    set state = '02' ,ab01 = #{ab01},
+        ab02 = #{ab02}
+        where state =  '01'  and    id = #{id}
+    </update>
+
+    <!-- 删除部门 -->
+    <update id="delOrganization" parameterType="organization">
+        update  pt_upms_org    set state = '00' ,ab01 = #{ab01},
+        ab02 = #{ab02}
+        where state !=  '00'  and    id = #{id}
+    </update>
+
+
+    <!-- 根据用户id查用户信息 -->
+    <select id="findUserByUserId" parameterType="int" resultType="user">
+       select    `id`, `username`, `passwd`, `orgid`, `name`, `state`, `birthday`, `remark`, `sex`, `phone`, `aa01`, `aa02`, `ab01`, `ab02`  from  pt_upms_user where id = #{id}
+    </select>
+
+    <!-- 根据部门id查部门信息 -->
+    <select id="findOrgByOrgId" parameterType="int" resultType="organization">
+        select   `id`, `name`, `parentid`, `tel`, `fax`, `address`, `uid`, `remark`, `levels`, `sort`, `state`, `aa01`, `aa02`, `ab01`, `ab02`  from  pt_upms_org where id = #{id}
+    </select>
+
+
+    <!-- 部门id和和父级部门状态统计是否存在该状态的 -->
+    <select id="getParentOrgCountByOrgIdAndState" parameterType="dto" resultType="long">
+         select  count(*)  from  pt_upms_org   where  id   =   ( select   parentid  from  pt_upms_org  where id = #{id}) and state =#{state}
+    </select>
+    <!-- 查询部门的子部门中满足状态的数据条数 -->
+    <select id="getSubOrgCountByOrgIdAndState" parameterType="dto" resultType="long">
+        select  count(*) from  pt_upms_org where  parentid  = #{id}   and state  = #{state}
+    </select>
+
+    <!-- 查询部门的子部门中满足状态的数据条数 -->
+    <select id="getSubOrgCountByOrgIdAndNotState" parameterType="dto" resultType="long">
+        select  count(*) from  pt_upms_org where  parentid  = #{id}   and state  != #{state}
+    </select>
+
+    <!-- 查询部门的子部门中满足状态的数据条数 -->
+    <select id="getCurrOrgUserCountByNotState" parameterType="dto" resultType="long">
+      select  count(*) from pt_upms_user where orgid = #{id} and  state !=  #{state}
+    </select>
+
+
+    <!-- 修改密码 -->
+    <update id="updUserPwd" parameterType="dto">
+        update  pt_upms_user set passwd = #{newPasswd}
+        where state =  '01' and   id = #{id} and  passwd = #{oldPasswd}
+    </update>
+</mapper>

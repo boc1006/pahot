@@ -1,0 +1,57 @@
+* {
+    word-wrap: break-word;
+}
+
+.container-fluid {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+header, footer, section, aside, details, menu, article, section, nav, address, hgroup, figure, figcaption, legend {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.va-m {
+    vertical-align: middle !important;
+}
+
+.page-404 .error-title {
+    font-size: 80px;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+.page-404 .error-title {
+    font-size: 80px;
+}
+
+.page-404 {
+    color: #afb5bf;
+    padding-top: 60px;
+    padding-bottom: 90px;
+}
+
+.text-c {
+    text-align: center;
+}
+
+.page-404 .error-description {
+    font-size: 24px;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+.page-404 .error-info {
+    font-size: 14px;
+}
+.c-primary, .c-primary a, a.c-primary {
+    color: #5a98de;
+}

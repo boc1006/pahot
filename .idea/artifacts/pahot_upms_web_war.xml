@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="pahot-upms-web:war">
+    <output-path>$PROJECT_DIR$/pahot-upms/pahot-upms-web/target</output-path>
+    <root id="archive" name="upms.war">
+      <element id="artifact" artifact-name="pahot-upms-web:war exploded" />
+    </root>
+  </artifact>
+</component>

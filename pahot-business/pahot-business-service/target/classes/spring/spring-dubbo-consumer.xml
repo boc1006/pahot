@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+        
+	<!-- 导入分布式事务接口 -->
+	<dubbo:reference interface="cn.pahot.xa.facade.CapXaFacade" id="capXaFacade" check="false"/>
+	<!-- 短信管理接口 -->
+	<dubbo:reference interface="cn.pahot.message.facade.SmsFacade" id="smsFacade" check="false"/>
+	<!--会员管理服务接口-->
+    <dubbo:reference interface="cn.pahot.member.facade.MemberFacade" id="memberFacade" check="false"/>
+</beans>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pahot.logger.dao.LoggerMapper" >
+
+	<!-- 保存系统访问日志 -->
+	<insert id="saveAccessLogger" parameterType="accessLog">
+		insert into pt_logger_access (id,sid,usertype,uid,ip,
+		                              params,accesstime,url,dbtime)
+		                      values (#{id},#{sid},#{usertype},#{uid},#{ip},
+		                              #{params},#{accesstime},#{url},#{dbtime})
+	</insert>
+	
+	<!-- 保存系统异常日志 -->
+	<insert id="saveExceptionLogger" parameterType="exceptionLog">
+		insert into pt_logger_exception (id,sid,classname,methodname,errortime,
+		                                 message,ip,url,request,dbtime)
+		                         values (#{id},#{sid},#{classname},#{methodname},#{errortime},
+		                                 #{message},#{ip},#{url},#{request},#{dbtime})
+	</insert>
+</mapper>

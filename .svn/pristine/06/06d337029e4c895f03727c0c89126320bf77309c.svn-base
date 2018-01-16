@@ -1,0 +1,83 @@
+package dubbo.test;
+
+import cn.pahot.sample.entity.UserEntity;
+import cn.pahot.sample.facade.SampleFacade;
+import com.alibaba.fastjson.JSONObject;
+import com.boc.common.utils.DateUtils;
+import com.boc.common.utils.httpclient.SimpleHttpUtils;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * 测试
+ * <p>@Title pahot2.0
+ * <p>@Author boc
+ * <p>@Date 2017/12/24
+ * <p>@Email 87080234@gmail.com
+ * <p>@Department XXX部门
+ * <p>@Version V1.0
+ * <p>@Copyright © boc Inc. All rights reserved.
+ */
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:dubbo-sample-consumer.xml")
+public class Test {
+	@Autowired
+	private SampleFacade sampleFacade;
+
+	@org.junit.Test
+	public void queryByUser(){
+		List<UserEntity> list = sampleFacade.queryUserList("510100");
+		System.out.println(JSONObject.toJSONString(list));
+	}
+
+	@org.junit.Test
+	public void dstributedRedisLock() {
+		System.out.println("begin==>"+System.currentTimeMillis());
+		for(int i = 0 ; i < 100 ; i ++) {
+			sampleFacade.dstributedRedisLock();
+		}
+		System.out.println("End==>"+System.currentTimeMillis());
+	}
+	private CountDownLatch countDownLatch = new CountDownLatch(100);
+	@org.junit.Test
+	public void testHttp(){
+		Long begin = DateUtils.getCurrDateTimeToLong();
+		Executor executor = Executors.newFixedThreadPool(20);
+		Map<String,String> param = new HashMap<>();
+		for(int i = 0 ; i < 100 ; i ++) {
+			executor.execute(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						TimeUnit.MILLISECONDS.sleep(10);
+					}catch (Exception e) {
+						e.printStackTrace();
+					}
+					String res = SimpleHttpUtils.httpGet("http://localhost:8080/example/sample/test.ak",param);
+					System.out.println(res);
+					countDownLatch.countDown();
+				}
+			});
+
+		}
+		try {
+			countDownLatch.await();
+			System.out.println(DateUtils.getCurrDateTimeToLong()-begin);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+	}
+}

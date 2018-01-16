@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-business" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-business/pahot-business-facade" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-business/pahot-business-front" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-business/pahot-business-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-business/pahot-business-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-common/pahot-common-config" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-common/pahot-common-core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-common/pahot-common-utils" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-common/pahot-common-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-goods" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-goods/pahot-goods-facade" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-goods/pahot-goods-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-goods/pahot-goods-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-logger" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-logger/pahot-logger-facade" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-logger/pahot-logger-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-member" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-member/pahot-member-facade" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-member/pahot-member-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-member/pahot-member-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-message" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-message/pahot-message-facade" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-message/pahot-message-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-sample" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-sample/pahot-sample-facade" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-sample/pahot-sample-facade-consumer" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-sample/pahot-sample-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-sample/pahot-sample-service-consumer" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-sample/pahot-sample-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-upms" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-upms/pahot-upms-facade" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-upms/pahot-upms-facade-auth" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-upms/pahot-upms-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-upms/pahot-upms-service-auth" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-upms/pahot-upms-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-xa" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-xa/pahot-xa-facade" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-xa/pahot-xa-scheduler" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pahot-xa/pahot-xa-service" charset="UTF-8" />
+  </component>
+</project>

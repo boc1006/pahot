@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pahot.business.dao.BusinessInfoDao">
+
+    <!-- 添加商家信息-->
+    <insert id="addBusinessInfo" parameterType="businessInfoEntity" useGeneratedKeys="true" keyProperty="id">
+        insert into pt_business_merchant
+        (`name`,`located_type`,`mid`,`auth_phone`,`auth_name`,`other_concat`,`email`,`state`,`supply_state`,`sale_state`,`located_date`,`exp_date`,`biz_lng`,`biz_lat`,`remark`,`idcard`,`ask_id`)
+        values (#{name},#{located_type},#{mid},#{auth_phone},#{auth_name},#{other_concat},#{email},#{state},#{supply_state},#{sale_state},#{located_date},#{exp_date},#{biz_lng},#{biz_lat},#{remark},#{idcard},#{ask_id})
+    </insert>
+
+    <!--通过id查询商家 -->
+    <select id="getBusinessInfoById" parameterType="java.lang.Integer" resultType="businessInfoEntity">
+        select  `id`,`ask_id`,`name`,`located_type`,`mid`,`auth_phone`,`auth_name`,`idcard`,`other_concat`,`email`,`state`,`supply_state`,`sale_state`,`located_date`,`exp_date`,`biz_lng`,`biz_lat`,`remark` from  pt_business_merchant
+        where  `id` = #{id}
+    </select>
+
+    <!--分页查询商家信息-->
+    <select id="getBusinessInfoForPage" parameterType="dto" resultType="businessInfoEntity">
+        select
+        `id`,`ask_id`,`name`,`located_type`,`mid`,`auth_phone`,`auth_name`,`idcard`,`other_concat`,`email`,`state`
+        ,`supply_state`,`sale_state`,`located_date`,`exp_date`,`biz_lng`,`biz_lat`,`remark` from pt_business_merchant
+        where 1=1
+        <if test="auth_phone!=null ">and `auth_phone` = #{auth_phone}</if>
+        <if test="idcard!=null ">and `idcard` = #{idcard}</if>
+        <if test="email!=null ">and `email` = #{email}</if>
+        <if test="name!=null ">and `name` = #{name}</if>
+        ORDER BY id ASC
+    </select>
+
+    <!-- 更新商家信息-->
+    <update id="updateBusinessInfoById" parameterType="businessInfoEntity">
+        UPDATE pt_business_merchant
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name!=null ">`name` = #{name},</if>
+            <if test="auth_phone != null">`auth_phone` = #{auth_phone},</if>
+            <if test="other_concat != null ">`other_concat` = #{other_concat},</if>
+            <if test="email != null'">auth_name = #{email},</if>
+            <if test="other_concat != null and other_concat != '' ">other_concat = #{other_concat},</if>
+            <if test="email != null and email != '' ">email = #{email},</if>
+            <if test="exp_date != null and exp_date != '' ">exp_date = #{exp_date},</if>
+            <if test="biz_lng != null and biz_lng != '' ">biz_lng = #{biz_lng},</if>
+            <if test="biz_lat != null and biz_lat != '' ">biz_lat = #{biz_lat},</if>
+            <if test="remark != null and remark != '' ">remark = #{remark},</if>
+        </trim>
+        WHERE id = #{id}
+    </update>
+
+    <!--更新商家状态和供应商销售商状态-->
+    <update id="updateBusinessInfoForState" parameterType="dto">
+        UPDATE pt_business_merchant
+        <trim prefix="set" suffixOverrides=",">
+            <if test="idcard != null and idcard != '' ">name = #{idcard},</if>
+            <if test="located_type != null and located_type != '' ">located_type = #{located_type},</if>
+            <if test="auth_phone != null and auth_phone != '' ">auth_phone = #{auth_phone},</if>
+            <if test="auth_name != null and auth_name !=''">auth_name = #{auth_name},</if>
+            <if test="state != null and state != '' ">state = #{state},</if>
+            <if test="supply_state != null and supply_state != '' ">supply_state = #{supply_state},</if>
+            <if test="sale_state != null and sale_state != '' ">sale_state = #{sale_state},</if>
+        </trim>
+        WHERE id = #{id}
+    </update>
+
+    <!--修改商家信息-->
+    <update id="updateBusinessItem" parameterType="businessInfoEntity">
+
+        UPDATE pt_business_merchant
+
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name != null and name != '' ">name = #{name},</if>
+            <if test="idcard != null and idcard != '' ">name = #{idcard},</if>
+            <if test="located_type != null and located_type != '' ">located_type = #{located_type},</if>
+            <if test="mid != null and mid != '' ">mid = #{mid},</if>
+            <if test="auth_phone != null and auth_phone != '' ">auth_phone = #{auth_phone},</if>
+            <if test="auth_name != null and auth_name !=''">auth_name = #{auth_name},</if>
+            <if test="other_concat != null and other_concat != '' ">other_concat = #{other_concat},</if>
+            <if test="email != null and email != '' ">email = #{email},</if>
+            <if test="state != null and state != '' ">state = #{state},</if>
+            <if test="supply_state != null and supply_state != '' ">supply_state = #{supply_state},</if>
+            <if test="sale_state != null and sale_state != '' ">sale_state = #{sale_state},</if>
+            <if test="located_date != null and located_date != '' ">located_date = #{located_date},</if>
+            <if test="exp_date != null and exp_date != '' ">exp_date = #{exp_date},</if>
+            <if test="biz_lng != null and biz_lng != '' ">biz_lng = #{biz_lng},</if>
+            <if test="biz_lat != null and biz_lat != '' ">biz_lat = #{biz_lat},</if>
+            <if test="remark != null and remark != '' ">remark = #{remark},</if>
+        </trim>
+
+        WHERE id = #{id}
+
+    </update>
+
+</mapper>

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.pahot.xa.dao.CapXaMapper">
+
+    <sql id="condition_sql">
+        <if test="id != null and id != ''">and id = #{id}</if>
+        <if test="source != null and source != ''">and source = #{source}</if>
+        <if test="queuename != null and queuename != ''">and queuename = #{queuename}</if>
+        <if test="isdead != null and isdead != ''">and isdead = #{isdead}</if>
+        <if test="state != null and state != ''">and state = #{state}</if>
+        <if test="ext2 != null and ext2 != ''">and ext2 = #{ext2}</if>
+        <if test="aa02 != null and aa02 != ''">  <![CDATA[ and aa02 < #{aa02}]]></if>
+        <if test="delaytime != null and delaytime != ''">  <![CDATA[ and delaytime <= #{delaytime}]]></if>
+    </sql>
+
+    <!-- 保存消息 -->
+    <insert id="saveMessage" useGeneratedKeys="true" keyProperty="id" parameterType="msg">
+		insert into pt_xa_transaction (content,type,source,queuename,repeatcount,isdead,state,
+		                                   remark,aa01,aa11,aa02,ext1,ext2,ext3,delaytime)
+		                            values (#{content},#{type},#{source},#{queuename},#{repeatcount},#{isdead},#{state},
+		                                    #{remark},#{aa01},#{aa11},#{aa02},#{ext1},#{ext2},#{ext3},#{delaytime})
+	</insert>
+
+    <!-- 根据条件查询消息 -->
+    <select id="queryMessageByList" parameterType="dto" resultType="msg">
+        select id,content,type,source,queuename,repeatcount,isdead,state,
+        remark,aa01,aa02,ab01,ab02,ext1,ext2,ext3,delaytime
+        from pt_xa_transaction
+        <where>
+            <include refid="condition_sql"/>
+        </where>
+        <![CDATA[ order by aa02 ]]>
+        <if test="sortType != null and sortType !='' and sortType=='ASC'">
+            asc
+        </if>
+        <if test="sortType != null and sortType !='' and sortType=='DESC'">
+            desc
+        </if>
+    </select>
+
+    <!-- 根据条件查询分页数据 -->
+    <select id="queryMessagelistPage" parameterType="dto" resultType="msg">
+        select id,content,type,source,queuename,repeatcount,isdead,state,
+        remark,aa01,aa02,ab01,ab02,ext1,ext2,ext3,delaytime
+        from pt_xa_transaction
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="source != null and source != ''">and source = #{source}</if>
+            <if test="queuename != null and queuename != ''">and queuename = #{queuename}</if>
+            <if test="isdead != null and isdead != ''">and isdead = #{isdead}</if>
+            <if test="state != null and state != ''">and state = #{state}</if>
+            <if test="aa02 != null and aa02 != ''">  <![CDATA[ and aa02 < #{aa02}]]></if>
+            <if test="delaytime != null and delaytime != ''">  <![CDATA[ and delaytime <= #{delaytime}]]></if>
+        </where>
+        <![CDATA[ order by aa02 ]]>
+        <if test="sortType == 'ASC'">asc</if>
+        <if test="sortType != 'ASC'">desc</if>
+    </select>
+
+    <!-- 根据条件查询消息 -->
+    <select id="queryMessageByDTO" parameterType="dto" resultType="msg">
+        select id,content,type,source,queuename,repeatcount,isdead,state,
+        remark,aa01,aa02,ab01,ab02,ext1,ext2,ext3,delaytime
+        from pt_xa_transaction
+        <where>
+            <include refid="condition_sql"/>
+        </where>
+        <![CDATA[ order by aa02 ]]>
+        <if test="sortType != null and sortType !='' and sortType=='ASC'">
+            asc
+        </if>
+        <if test="sortType != null and sortType !='' and sortType=='DESC'">
+            desc
+        </if>
+    </select>
+
+    <!-- 修改消息信息 -->
+    <update id="modifyMessageByCondition" parameterType="msg">
+        update pt_xa_transaction
+        set ab02 = #{ab02}
+        <if test="isdead != null and isdead != ''">
+            , isdead = #{isdead}
+        </if>
+        <if test="state != null and state != ''">
+            , state = #{state}
+        </if>
+        <if test="repeatcount != null and repeatcount != ''">
+            , repeatcount = #{repeatcount}
+        </if>
+        <if test="remark != null and remark != ''">
+            , remark = #{remark}
+        </if>
+        <if test="ab01 != null and ab01 != ''">
+            , ab01 = #{ab01}
+        </if>
+        where id = #{id}
+    </update>
+
+    <!-- 保存消息到历史记录表 -->
+    <insert id="saveMessageToHistory" parameterType="dto">
+		insert into pt_xa_transaction_history (id,content,`type`,source,queuename,repeatcount,isdead,state, remark,aa01,aa11,aa02,ab01,ab11,ab02,ext1,ext2,ext3,delaytime)
+			select a.id,a.content,a.type,a.source,a.queuename,a.repeatcount,a.isdead,a.state,a.remark,a.aa01,a.aa11,a.aa02,a.ab01,a.ab11,a.ab02,a.ext1,a.ext2,a.ext3,delaytime from pt_xa_transaction a where a.id = #{id}
+	</insert>
+
+    <!-- 删除消息信息 -->
+    <delete id="deleteMessageById" parameterType="dto">
+		delete
+		  from pt_xa_transaction
+		 where id = #{id}
+	</delete>
+
+    <!--  查询执行日志 -->
+    <insert id="recordExecutionLog" parameterType="cn.pahot.xa.entity.ExecutionLogger">
+	  	insert into pt_xa_transaction_exec_log(tid,sid,message,state)
+	  		values (#{tid}, #{sid}, #{message}, #{state})
+	</insert>
+
+    <!-- 根据订阅编号查询订阅信息 -->
+    <select id="getSubMessageForSubid" parameterType="java.lang.Integer" resultType="sub">
+		select id,subname,type,state,source,queuename,dbid,remark,delays
+		  from pt_xa_transaction_sub
+		 where state in ('1','2')
+		   and id = #{id}
+	</select>
+
+    <!-- 批量插入发布消息 -->
+    <insert id="insertPubForBatch" parameterType="java.util.List">
+        insert into pt_xa_transaction_pub (mid,sid,pid,contents,state,dbid,remark,createtime)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.mid},#{item.sid},#{item.pid},#{item.contents},#{item.state},#{item.dbid},#{item.remark},#{item.createtime})
+        </foreach>
+    </insert>
+
+    <!-- 批量插入事务消息 -->
+    <insert id="insertMsgForBatch" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
+        insert into pt_xa_transaction (content,type,source,queuename,repeatcount,isdead,state,
+        remark,aa01,aa11,aa02,ext1,ext2,ext3)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.content},#{item.type},#{item.source},#{item.queuename},
+            #{item.repeatcount},#{item.isdead},#{item.state},#{item.remark},
+            #{item.aa01},#{item.aa11},#{item.aa02},#{item.ext1},#{item.ext2},#{item.ext3})
+        </foreach>
+    </insert>
+
+    <!-- 根据发布消息编号查询消息列表 -->
+    <select id="queryPubMessageForPid" parameterType="java.lang.Long" resultType="pub">
+        select a.mid,a.pid,a.sid,a.contents,a.state,a.dbid,a.remark,a.createtime
+        from pt_xa_transaction_pub a,pt_xa_transaction b
+        where a.pid = #{pid}
+        and a.mid = b.id
+        and b.state = '01' <!-- 01待确认 -->
+        order by a.createtime asc
+    </select>
+
+    <!-- 获取待确认的订阅发布消息ID -->
+    <select id="queryPubMessageForConfirming" parameterType="java.lang.Long" resultType="pub">
+        select a.pid,a.dbid
+        from pt_xa_transaction_pub a,pt_xa_transaction b
+        where a.mid = b.id
+        and b.state = '01' <!-- 01待确认 -->
+        and b.ext2 = '2' <!-- 订阅模式 -->
+        and <![CDATA[b.aa02 < #{aa02}]]>
+        group by a.pid
+        order by a.createtime asc
+    </select>
+
+    <!-- 删除订阅消息 -->
+    <delete id="deleteMessageByPubMessageId" parameterType="java.lang.Long">
+    	delete from pt_xa_transaction_pub where pid = #{pid}
+    </delete>
+
+    <!-- 保存订阅消息 -->
+    <insert id="saveSubMessage" parameterType="sub">
+    	insert into pt_xa_transaction_sub (id,subname,type,source,queuename,
+    										state,dbid,remark,aa01,aa11,aa02,delays)
+    								values (#{id},#{subname},#{type},#{source},#{queuename},
+    										'1',#{dbid},#{dbid},#{aa01},#{aa11},#{aa02},#{delays})
+    </insert>
+
+    <!-- 修改订阅消息 -->
+    <update id="updateSubMessage" parameterType="sub">
+    	update pt_xa_transaction_sub
+    	   set subname = #{subname},
+    	   	   type = #{type},
+    	   	   source = #{source},
+    	   	   queuename = #{queuename},
+    	   	   delays = #{delays},
+    	   	   remark = #{remark},
+    	   	   dbid = #{dbid},
+    	   	   ab01 = #{ab01},
+    	   	   ab11 = #{ab11},
+    	   	   ab02 = #{ab02}
+    	 where id = #{id}
+    </update>
+
+    <!-- 修改订阅消息状态 -->
+    <update id="updateSubMessageStateForId" parameterType="sub">
+    	update pt_xa_transaction_sub
+    	   set state = #{state},
+    	   	   ab01 = #{ab01},
+    	   	   ab11 = #{ab11},
+    	   	   ab02 = #{ab02}
+    	 where id = #{id}
+    </update>
+
+    <!-- 检索订阅消息 -->
+    <select id="querySubMessage" parameterType="sub" resultType="sub">
+        select id,subname,type,source,queuename,state,dbid,
+        remark,aa01,aa11,aa02,ab01,ab11,ab02,delays
+        from pt_xa_transaction_sub
+        where 1=1
+        <if test="id != null and id != 0">and id = #{id}</if>
+        <if test="subname != null and subname != ''">and subname like concat('%',#{subname},'%')</if>
+        <if test="queuename != null and queuename != ''">and queuename like concat('%',#{queuename},'%')</if>
+        <if test="dbid != null and dbid != ''">and dbid = #{dbid}</if>
+        <if test="state != null and state != ''">and state = #{state}</if>
+    </select>
+
+    <select id="selectOneMessageSub" parameterType="java.lang.Integer" resultType="dto">
+		select id,subname,type,source,queuename,state,dbid,
+    		   remark,aa01,aa11,aa02,ab01,ab11,ab02,delays
+    	from pt_xa_transaction_sub
+    	where id = #{id}
+    	order by aa02 desc
+    	limit 1
+	</select>
+</mapper>

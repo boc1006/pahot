@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pahot.business.dao.BusinessAccountDao">
+
+    <!-- 添加商家审核日志--> <!-- `ab01`,`ab02`-->
+    <insert id="addBusinessAccount" parameterType="businessAccountEntity">
+        insert into pt_business_merchant_account
+            (`id`,
+            `merchant_id`,
+            `state`,
+            `name`,
+            `username`,
+            `role_id`,
+            `aa01`,
+            `aa02`)
+        values(#{id},
+            #{merchant_id},
+            #{state},
+            #{name},
+            #{username},
+            #{role_id},
+            #{aa01},
+            #{aa02})
+    </insert>
+
+    <!--添加一条商家子账户-->
+    <insert id="addShopAccount" parameterType="businessAccountEntity">
+
+        INSERT INTO pt_business_merchant_account
+        (id,
+        merchant_id,
+        state,
+        name,
+        username,
+        root,
+        aa01,
+        aa02,
+        ab01,
+        ab02 )
+        VALUES
+        (#{id},
+        #{merchant_id},
+        #{state},
+        #{name},
+        #{username},
+        #{root},
+        #{aa01},
+        #{aa02},
+        #{ab01},
+        #{ab02})
+    </insert>
+
+    <!--获取一条商家子账户信息-->
+    <select id="getShopAccountItem" parameterType="java.lang.Integer" resultType="businessAccountEntity">
+
+        SELECT (id,
+        merchant_id,
+        state,
+        name,
+        username,
+        root,
+        aa01,
+        aa02,
+        ab01,
+        ab02)
+        FROM
+        pt_business_merchant_account
+        WHERE
+        id  = #{id}
+    </select>
+
+    <!--获取商家子账户列表-->
+    <select id="getShopAccountList" parameterType="businessAccountEntity">
+        SELECT (id,
+        merchant_id,
+        state,
+        name,
+        username,
+        root,
+        aa01,
+        aa02,
+        ab01,
+        ab02)
+        FROM
+        pt_business_merchant_account
+
+    </select>
+
+    <!--更新商家子账户信息-->
+    <update id="updateShopAccountItem" parameterType="businessAccountEntity">
+
+        UPDATE pt_business_merchant_account
+        <trim prefix="set" suffixOverrides=",">
+            <if test="state != null and state != '' ">state = #{state},</if>
+            <if test="name != null and name != '' ">name = #{name},</if>
+            <if test="username != null and username != '' ">username = #{username},</if>
+            <if test="root != null and root != '' ">root = #{root},</if>
+            <if test="aa01 != null and aa01 != '' ">aa01 = #{aa01},</if>
+            <if test="aa02 != null and aa02 != '' ">aa02 = #{aa02},</if>
+            <if test="ab01 != null and ab01 != '' ">ab01 = #{ab01},</if>
+            <if test="ab02 != null and ab02 != '' ">ab02 = #{ab02},</if>
+        </trim>
+        WHERE id = #{id}
+
+    </update>
+
+</mapper>

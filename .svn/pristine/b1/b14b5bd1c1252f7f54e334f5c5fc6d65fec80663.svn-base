@@ -1,0 +1,18 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>cn.pahot</groupId>
+    <artifactId>parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>pahot-common</artifactId>
+  <packaging>pom</packaging>
+  <name>pahot-common</name>
+  <description>pahot-common</description>
+  <modules>
+  	<module>pahot-common-utils</module>
+  	<module>pahot-common-config</module>
+  	<module>pahot-common-core</module>
+  	<module>pahot-common-web</module>
+  </modules>
+</project>

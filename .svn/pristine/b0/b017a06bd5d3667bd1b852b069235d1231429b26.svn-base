@@ -1,0 +1,171 @@
+package cn.pahot.sample.controller;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.boc.common.utils.DateUtils;
+import org.apache.catalina.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.boc.annotation.AccessControl;
+import com.boc.annotation.AccessLog;
+import com.boc.common.metatype.DTO;
+import com.boc.common.page.PageParams;
+import com.boc.common.utils.MD5Helper;
+import com.boc.common.web.Constants;
+import com.boc.common.web.WebResponse;
+import com.boc.common.web.springmvc.BaseController;
+import com.boc.common.web.utils.PasswordUtils;
+import com.github.pagehelper.PageInfo;
+
+import cn.pahot.sample.consts.AccessURI;
+import cn.pahot.sample.entity.UserEntity;
+import cn.pahot.sample.facade.SampleFacade;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Demo Controller
+ * <p>@Title: SampleController.java 
+ * <p>@Package cn.pahot.sample.controller 
+ * <p>@Description: TODO
+ * <p>@author huangjie hj87080234@gmail.com   
+ * <p>@date 2017年12月1日 下午4:53:18 
+ * <p>@version V1.0
+ * <p>Copyright © boc group.All Rights Reserved.
+ */
+@RestController
+@RequestMapping(value = "/sample")
+public class SampleController extends BaseController{
+	
+	@Autowired
+	private SampleFacade sampleFacade;
+
+	@RequestMapping(value = "/test.ak",method=RequestMethod.GET)
+	@ResponseBody
+	public Object test(){
+		Long begin = DateUtils.getCurrDateTimeToLong();
+		Map<String,String> m = new HashMap<>();
+		m.put("threadName",Thread.currentThread().getName());
+		m.put("Begin", String.valueOf(begin));
+		sampleFacade.dstributedRedisLock();
+		Long end = DateUtils.getCurrDateTimeToLong();
+		m.put("End", String.valueOf(end));
+		m.put("times", String.valueOf(end-begin));
+		return m;
+	}
+	
+	/**
+	 * 跳转到一个指定的JSP页面
+	 * @param httpServletRequest
+	 * @param httpServletResponse
+	 * @return
+	 */
+	@AccessLog//添加访问日志注解
+	@AccessControl(url=AccessURI.ADD_URL)//添加访问权限控制,由于只作页面跳转,只需要校验URL权限即可,该URL和下面接口定义的URL不一定一样
+	@RequestMapping(value = "/jumpAddUser.sec",method=RequestMethod.GET)
+	public String jumpAddUser(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
+		return "user/addUser";
+	}
+	
+	/**
+	 * 异步返回用户请求业务结果
+	 * @param httpServletRequest
+	 * @param httpServletResponse
+	 * @return
+	 */
+	@AccessLog//添加访问日志注解
+	@AccessControl(url=AccessURI.ADD_URL,code=AccessURI.ADD_URL_ADD)//添加操作权限控制,需要传入URL和操作CODE
+	@RequestMapping(value = "/addUser.sec",method=RequestMethod.POST)
+	public WebResponse addUser(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
+		//先定义一个异步返回对象,约定所有异步返回结果都采用该对象进行封装
+		WebResponse wr = new WebResponse();
+		
+		//获取请求传入参数,并把参数转换为一个DTO对象
+		DTO<String,String> param = getParamAsDTO();
+		//TODO 这里先做参数有效性校验
+		String name = param.getAsString("name");
+		String passwd = param.getAsString("passwd");
+		if(StringUtils.isEmpty(name)) {
+			wr.setAppCode(Constants.FAIL,"用户名不能为空!");
+			return wr;
+		}
+		if(StringUtils.isEmpty(passwd)) {
+			wr.setAppCode(Constants.FAIL,"密码不能为空!");
+			return wr;
+		}
+		
+		//构建一个带操作人ID,操作时间的实体类
+		UserEntity user = buildEntity(UserEntity.class);
+		user.setName(param.getAsString("name"));
+		user.setPasswd(PasswordUtils.encrypt(param.getAsString("passwd")));
+		//....
+		
+		//创建一个带用户会话信息的DTO
+		DTO<String,String> sessionDTO = buildSessionDTO();
+		
+		sampleFacade.addUser(user);//调用业务处理接口
+		//....
+		//如果所有业务都实现完成,并且正确结束,则进行如下处理
+//		wr.setAppCode(Constants.SUCCESS);//约定该状态码必须设置
+		wr.setAjaxMsg(true, "", "index.sec", "");
+		//如果还需要返回其它数据则可使用WebResponse中的其它API进行设置
+		//wr.addDto(dto);返回一个DTO对象
+		//wr.addValue(key, value);返回一个指定的KEY/VALUE
+		//wr.addResult(value);//返回一个结果集
+		return wr;
+	}
+	
+	/**
+	 * 异步返回分页结果
+	 * @param httpServletRequest
+	 * @param httpServletResponse
+	 * @return
+	 */
+	@AccessLog//添加访问日志注解
+	@AccessControl(url=AccessURI.ADD_URL,code=AccessURI.ADD_URL_QUERY)//添加操作权限控制,需要传入URL和操作CODE
+	@RequestMapping(value = "/queryUserListPage.sec",method=RequestMethod.POST)
+	public WebResponse queryUserListPage(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
+		//先定义一个异步返回对象,约定所有异步返回结果都采用该对象进行封装
+		WebResponse wr = new WebResponse();
+		
+		//获取请求传入参数,并把参数转换为一个DTO对象
+		DTO<String,String> param = getParamAsDTO();
+		if(!param.containsKey(PageParams.PAGENO_KEY)||!param.containsKey(PageParams.PAGESIZE_KEY)) {
+			wr.setAppCode(Constants.FAIL,"分页参数pageNo|pageSize必须传入");
+			return wr;
+		}
+		int pageNo = param.getAsInteger(PageParams.PAGENO_KEY);
+		int pageSize = param.getAsInteger(PageParams.PAGESIZE_KEY);
+		
+		if(pageNo == 0 || pageSize == 0) {
+			wr.setAppCode(Constants.FAIL,"分页参数pageNo|pageSize不能为0");
+			return wr;
+		}
+		
+		//先定义一个分页参数对象
+		PageParams<String> pageParams = new PageParams<>();
+		String condition = param.getAsString("condition");//获取其它查询条件
+		pageParams.setPageNo(pageNo);
+		pageParams.setPageSize(pageSize);
+		pageParams.setParams(condition);
+		PageInfo<UserEntity> pi = sampleFacade.queryUserListPages(pageParams);
+		wr.setPageResult(pi);
+		
+		return wr;
+	}
+	
+	public static void main(String[] args) {
+		String s = MD5Helper.encrypt("sys/sysconfig.sec");
+		System.out.println(s);
+		String k = "14d7a393b6dda6921be48551406b17b9";
+	}
+	
+}

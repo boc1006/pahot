@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pahot.upms.dao.RoleMapper">
+
+    <!-- 查询指定业务子系统下的角色列表 -->
+    <select id="queryRolesBySystemId" parameterType="dto" resultType="role">
+        select id,sid,name,validity,state,sort,
+        arights,hrights,aa01,aa02,ab01,ab02,(validity &lt; now()) as outdate
+        from pt_upms_role
+        where sid = #{sid}
+        and (arights != '1' and hrights != '1') <!-- 排序超级管理员角色 -->
+        <if test="state != null and state != '' ">
+            and state = #{state}
+        </if>
+        <if test="validity != null and validity != '' ">
+            and (validity = 0 or validity > #{validity})
+        </if>
+        order by sort
+    </select>
+
+    <!-- 根据角色ID查询角色信息 -->
+    <select id="queryRoleById" parameterType="java.lang.Integer" resultType="role">
+    	 select id,sid,name,validity,state,sort,
+        	   arights,hrights,aa01,aa02,ab01,ab02
+          from pt_upms_role
+         where id = #{id}
+    </select>
+
+    <!-- 新增角色,并返回角色ID -->
+    <insert id="saveRole" parameterType="role" useGeneratedKeys="true" keyProperty="id">
+		insert into pt_upms_role (sid,name,validity,sort,aa01,aa02) 
+		                  values (#{sid},#{name},#{validity},#{sort},#{aa01},#{aa02})
+	</insert>
+
+    <!-- 修改 角色信息-->
+    <update id="updateRole" parameterType="role">
+        update pt_upms_role
+        set ab01 = #{ab01},
+        ab02 = #{ab02}
+        <if test="name != null and name != ''">
+            , name = #{name}
+        </if>
+        <if test="validity != null">
+            , validity = #{validity}
+        </if>
+        <if test="sort != null and sort != ''">
+            , sort = #{sort}
+        </if>
+        <if test="state != null and state != ''">
+            , state = #{state}
+        </if>
+        <if test="arights != null and arights != ''">
+            , arights = #{arights}
+        </if>
+        <if test="hrights != null and hrights != ''">
+            , hrights = #{hrights}
+        </if>
+        where id = #{id}
+    </update>
+
+
+    <!-- 查询用户角色关系表 -->
+    <select id="queryUserRole" parameterType="dto" resultType="userRole">
+        select `id`,`uid`,`sid`,`rid`,`aa01`,`aa02`,`ab01`,`ab02` from
+        pt_upms_user_role
+        where 1=1
+        <if test="sid != null  ">
+            and sid = #{sid}
+        </if>
+        <if test="uid != null ">
+            and uid = #{uid}
+        </if>
+        <if test="rid != null ">
+            and rid = #{rid}
+        </if>
+        order by `id` ASC
+    </select>
+
+    <!-- 保存用户角色关系 -->
+    <insert id="saveUserRole" parameterType="userRole" useGeneratedKeys="true" keyProperty="id">
+		insert into pt_upms_user_role (`uid`,`sid`,`rid`,`aa01`,`aa02`) values (#{uid},#{sid},#{rid},#{aa01},#{aa02})
+	</insert>
+
+    <!-- 删除用户角色关系-->
+    <delete id="delUserRole" parameterType="int">
+		delete  from pt_upms_user_role  where id=#{id}
+	</delete>
+</mapper>

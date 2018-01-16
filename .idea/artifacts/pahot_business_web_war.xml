@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="pahot-business-web:war">
+    <output-path>$PROJECT_DIR$/pahot-business/pahot-business-web/target</output-path>
+    <root id="archive" name="business.war">
+      <element id="artifact" artifact-name="pahot-business-web:war exploded" />
+    </root>
+  </artifact>
+</component>
